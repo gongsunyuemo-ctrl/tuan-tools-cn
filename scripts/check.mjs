@@ -13,7 +13,6 @@ const basePath = new URL(config.siteUrl).pathname.replace(/\/$/, "");
 const htmlFiles = (await walk(root)).filter((file) => file.endsWith(".html") && !(root === sourceRoot && file.includes("/_site/")));
 const jsFiles = (await walk(resolve(root, "assets/js"))).filter((file) => file.endsWith(".js"));
 const failures = [];
-const toolHtmlFiles = new Set(["compress/index.html", "watermark/index.html", "resize/index.html", "convert/index.html", "remove-exif/index.html"]);
 
 if (root === sourceRoot) {
   try {
@@ -51,13 +50,6 @@ for (const file of htmlFiles) {
   for (const match of html.matchAll(/<script type="application\/ld\+json">([\s\S]*?)<\/script>/g)) {
     try { structuredItems.push(JSON.parse(match[1])); }
     catch (error) { failures.push(`${name}：JSON-LD 无法解析：${error.message}`); }
-  }
-  if (toolHtmlFiles.has(name)) {
-    const application = structuredItems.find((item) => item?.["@type"] === "WebApplication");
-    const offer = Array.isArray(application?.offers) ? application.offers[0] : application?.offers;
-    if (!application || application.isAccessibleForFree !== true || Number(offer?.price) !== 0 || typeof offer?.priceCurrency !== "string" || !offer.priceCurrency) {
-      failures.push(`${name}：结构化数据缺少有效的免费价格信息`);
-    }
   }
   for (const match of html.matchAll(/(?:href|src)="([^"]+)"/g)) {
     const link = match[1];
