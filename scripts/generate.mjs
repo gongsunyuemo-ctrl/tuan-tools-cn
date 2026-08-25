@@ -53,7 +53,7 @@ function structuredData(page) {
     items.push({ "@context": "https://schema.org", "@type": "WebSite", name: config.siteName, alternateName: config.shortName, url: absolute("/"), description: page.description, inLanguage: "zh-CN", dateModified: modified, publisher: { "@type": "Organization", name: config.operatorName, url: absolute("/") } });
   }
   if (page.kind === "tool") {
-    items.push({ "@context": "https://schema.org", "@type": "WebApplication", name: page.tool.name, url: absolute(`/${page.tool.slug}/`), description: page.description, applicationCategory: page.tool.category, operatingSystem: "支持现代浏览器的桌面与移动设备", browserRequirements: "需要 JavaScript、Canvas、Blob 和本地文件读取能力", isAccessibleForFree: true, offers: { "@type": "Offer", price: "0", priceCurrency: "CNY" }, author: { "@type": "Organization", name: config.operatorName, url: absolute("/") }, dateModified: modified });
+    items.push({ "@context": "https://schema.org", "@type": "WebApplication", name: page.tool.name, url: absolute(`/${page.tool.slug}/`), description: page.description, applicationCategory: page.tool.category, operatingSystem: "支持现代浏览器的桌面与移动设备", browserRequirements: "需要 JavaScript、Canvas、Blob 和本地文件读取能力", isAccessibleForFree: true, offers: { "@type": "Offer", price: 0, priceCurrency: "CNY" }, author: { "@type": "Organization", name: config.operatorName, url: absolute("/") }, dateModified: modified });
     items.push({ "@context": "https://schema.org", "@type": "BreadcrumbList", itemListElement: [
       { "@type": "ListItem", position: 1, name: "全部工具", item: absolute("/") },
       { "@type": "ListItem", position: 2, name: page.tool.name, item: absolute(`/${page.tool.slug}/`) }
