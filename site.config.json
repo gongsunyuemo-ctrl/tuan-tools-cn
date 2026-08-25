@@ -1,0 +1,23 @@
+{
+  "siteName": "图安工具",
+  "shortName": "图安",
+  "siteUrl": "https://tuan-image-tools.github.io",
+  "operatorName": "图安工具维护团队",
+  "contactUrl": "https://github.com/tuan-image-tools/tuan-image-tools.github.io/issues",
+  "repositoryUrl": "https://github.com/tuan-image-tools/tuan-image-tools.github.io",
+  "customDomain": "",
+  "lastModified": "2026-08-25",
+  "pageLastModified": {
+    "/": "2026-08-25",
+    "/compress/": "2026-08-25",
+    "/watermark/": "2026-08-25",
+    "/resize/": "2026-08-25",
+    "/convert/": "2026-08-25",
+    "/remove-exif/": "2026-08-25",
+    "/methodology/": "2026-08-25",
+    "/about/": "2026-08-25",
+    "/privacy/": "2026-08-25",
+    "/terms/": "2026-08-25"
+  },
+  "productionReady": true
+}

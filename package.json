@@ -1,0 +1,16 @@
+{
+  "name": "tuan-image-tools",
+  "version": "1.1.1",
+  "private": true,
+  "type": "module",
+  "engines": {
+    "node": ">=22 <25"
+  },
+  "scripts": {
+    "build": "node scripts/generate.mjs",
+    "test": "node tests/run.mjs",
+    "check": "node scripts/check.mjs && node tests/run.mjs",
+    "check:stage": "node scripts/check.mjs --root=_site",
+    "stage": "node scripts/generate.mjs --production && node tests/run.mjs && node scripts/check.mjs && node scripts/stage.mjs && node scripts/check.mjs --root=_site"
+  }
+}
