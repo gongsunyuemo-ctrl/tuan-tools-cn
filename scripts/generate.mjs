@@ -185,14 +185,30 @@ const home = {
   kind: "home", path: "/", title: `${config.siteName}｜图片压缩、水印、尺寸、格式与 EXIF 工具`, ogTitle: `${config.siteName}：浏览器本地图片处理`,
   description: "五个中文图片工具：压缩到指定KB、资料水印、尺寸裁剪、JPG/PNG/WebP转换和EXIF清除。图片处理在当前浏览器完成。"
 };
-const homeBody = `<section class="hero">
-  <img class="hero-background" src="${staticAsset("/assets/img/hero-workbench.webp")}" width="1672" height="941" fetchpriority="high" alt="桌面上的手机、照片、色卡和裁切尺">
-  <div class="hero-inner"><div class="hero-content"><h1 class="hero-brand">${escapeHtml(config.siteName)}</h1><p class="hero-title">五个本地运行的中文图片工具</p><p class="hero-copy">压缩、水印、尺寸、格式和照片信息处理都在当前浏览器完成。无需注册，本站代码不会主动上传所选图片。</p><div class="button-row"><a class="button" href="${asset("/compress/")}">压缩到指定 KB</a><a class="button secondary" href="#tools">查看全部工具</a></div></div></div>
+const homeBody = `<section class="home-top">
+  <div class="home-top-inner">
+    <div class="home-intro">
+      <p class="eyebrow">在线图片工具</p>
+      <h1>${escapeHtml(config.siteName)}</h1>
+      <p class="home-summary">压缩图片、添加水印、修改尺寸、转换格式和清除照片信息。</p>
+      <div class="home-facts" aria-label="服务特点"><span>浏览器本地处理</span><span>无需注册</span><span>免费使用</span></div>
+    </div>
+    <a class="featured-tool" href="${asset("/compress/")}">
+      <span class="featured-label">常用工具</span>
+      <span class="featured-title">图片压缩到指定 KB</span>
+      <span class="featured-copy">输入目标大小，生成适合上传或分享的新图片。</span>
+      <span class="featured-action">开始压缩 <span aria-hidden="true">→</span></span>
+    </a>
+  </div>
 </section>
-<section class="section" id="tools"><div class="section-heading"><p class="eyebrow">直接开始</p><h2>选择要完成的图片任务</h2><p>每个页面只解决一个明确问题，并说明格式变化、透明区域和元数据等边界。</p></div><div class="tool-list">
-${tools.map((tool, index) => `<a class="tool-row reveal" href="${asset(`/${tool.slug}/`)}"><span class="tool-number">0${index + 1}</span><span><strong>${tool.name}</strong><span class="tool-description">${tool.description}</span></span><span class="tool-arrow" aria-hidden="true">→</span></a>`).join("\n")}
+<section class="tool-directory" id="tools"><div class="tool-directory-inner">
+  <div class="directory-heading"><div><p class="eyebrow">全部工具</p><h2>选择图片处理任务</h2></div><p>支持静态 JPG、PNG 和 WebP，文件由当前浏览器处理。</p></div>
+  <div class="tool-grid">
+${tools.map((tool, index) => `<a class="tool-card reveal" href="${asset(`/${tool.slug}/`)}"><span class="tool-symbol" aria-hidden="true">${["KB", "水印", "PX", "格式", "EXIF"][index]}</span><span class="tool-card-copy"><strong>${tool.name}</strong><span>${tool.description}</span></span><span class="tool-arrow" aria-hidden="true">→</span></a>`).join("\n")}
+  </div>
 </div></section>
-<section class="section compact"><h2>可以核对的处理边界</h2><div class="evidence-strip"><div class="evidence-item"><strong>文件类型先检查</strong><p>读取文件签名和图片尺寸，拒绝伪装文件、动画图片和超限画布。</p></div><div class="evidence-item"><strong>结果明确展示</strong><p>生成后显示格式、尺寸或体积，并提供预览、打开与下载入口。</p></div><div class="evidence-item"><strong>测试方法公开</strong><p>边界值、透明通道、损坏 EXIF 和链接检查都列在测试方法页。</p></div></div></section>`;
+<section class="workflow-band"><div class="workflow-band-inner"><img src="${staticAsset("/assets/img/hero-workbench.webp")}" width="1672" height="941" loading="lazy" alt="桌面上的手机、照片、色卡和裁切尺"><div><p class="eyebrow">处理边界</p><h2>图片不经过本站上传接口</h2><p>所选文件在当前浏览器中读取、处理和导出。工具会检查文件类型、像素尺寸和常见异常，并在生成后显示结果信息。</p><a href="${asset("/methodology/")}">查看测试方法 <span aria-hidden="true">→</span></a></div></div></section>
+<section class="section compact"><div class="evidence-strip"><div class="evidence-item"><strong>格式先检查</strong><p>识别真实文件类型，拒绝伪装文件和动画图片。</p></div><div class="evidence-item"><strong>结果可核对</strong><p>生成后显示格式、尺寸或体积，再由用户下载。</p></div><div class="evidence-item"><strong>限制写清楚</strong><p>不把重新编码说成无损，不承诺水印绝对有效。</p></div></div></section>`;
 await writePage("index.html", pageShell(home, "home", homeBody));
 
 for (const tool of tools) {
