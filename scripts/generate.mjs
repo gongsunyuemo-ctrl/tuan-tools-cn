@@ -192,13 +192,8 @@ const homeBody = `<section class="home-top">
       <h1>${escapeHtml(config.siteName)}</h1>
       <p class="home-summary">压缩图片、添加水印、修改尺寸、转换格式和清除照片信息。</p>
       <div class="home-facts" aria-label="服务特点"><span>浏览器本地处理</span><span>无需注册</span><span>免费使用</span></div>
+      <div class="home-actions"><a class="button" href="${asset("/compress/")}">开始压缩图片</a><a class="home-text-link" href="#tools">查看全部工具</a></div>
     </div>
-    <a class="featured-tool" href="${asset("/compress/")}">
-      <span class="featured-label">常用工具</span>
-      <span class="featured-title">图片压缩到指定 KB</span>
-      <span class="featured-copy">输入目标大小，生成适合上传或分享的新图片。</span>
-      <span class="featured-action">开始压缩 <span aria-hidden="true">→</span></span>
-    </a>
   </div>
 </section>
 <section class="tool-directory" id="tools"><div class="tool-directory-inner">
