@@ -16,6 +16,7 @@ const absolute = (path) => `${siteUrl}${path === "/" ? "/" : path}`;
 const noindex = !config.productionReady;
 const generatedFiles = [];
 const staticFiles = [".nojekyll", "assets/css/styles.css", "assets/img/apple-touch-icon.png", "assets/img/favicon.png", "assets/img/hero-workbench.webp", "assets/js/image-core.js", "assets/js/site.js", "assets/js/compress.js", "assets/js/watermark.js", "assets/js/resize.js", "assets/js/convert.js", "assets/js/exif.js"];
+await writeFile(resolve(root, ".nojekyll"), "");
 const assetVersion = createHash("sha256").update((await Promise.all(staticFiles.map((file) => readFile(resolve(root, file))))).map((item) => createHash("sha256").update(item).digest("hex")).join(":"), "utf8").digest("hex").slice(0, 12);
 const staticAsset = (path) => `${asset(path)}?v=${assetVersion}`;
 
@@ -73,6 +74,7 @@ function head(page) {
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="theme-color" content="#f3f6f4">
   <meta http-equiv="Content-Security-Policy" content="${escapeHtml(csp)}">
   <meta name="referrer" content="no-referrer">
   ${shouldNoindex ? '<meta name="robots" content="noindex,nofollow">' : '<meta name="robots" content="index,follow,max-image-preview:large">'}
