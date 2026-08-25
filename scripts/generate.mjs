@@ -458,28 +458,141 @@ for (const tool of tools) {
   }
 
   if (tool.slug === "watermark") {
-    body = toolLayout(
-      tool,
-      "资料分享",
-      "添加接收方、用途和日期。水印可以增加直接挪用的成本，但不能替代打码或访问控制。",
-      `${dropzone(
-        "选择或拖入一张资料图片",
-        "请先确认接收方确有必要获取这份资料"
-      )}${preview("canvas", "水印预览会显示在这里")}
-<div class="controls"><div class="control-grid"><div class="control-group full"><label for="watermark-text">水印文字</label><input id="watermark-text" value="仅供资料审核使用" maxlength="80" autocomplete="off"><span class="hint">文字过长时自动缩小并换行，最多三行</span></div><div class="control-group"><label for="font-size">字号 <span id="font-size-value">48</span></label><input id="font-size" type="range" min="18" max="120" value="48"></div><div class="control-group"><label for="opacity">透明度 <span id="opacity-value">38%</span></label><input id="opacity" type="range" min="10" max="90" value="38"></div><div class="control-group"><label for="angle">旋转角度 <span id="angle-value">-25°</span></label><input id="angle" type="range" min="-60" max="60" value="-25"></div><div class="control-group"><label for="color">文字颜色</label><input id="color" type="color" value="#b3261e"></div><div class="control-group"><label for="output-format">输出格式</label><select id="output-format"><option value="image/jpeg">JPG</option><option value="image/png">PNG</option><option value="image/webp">WebP</option></select></div><div class="control-group"><div class="inline-check"><input id="repeat" type="checkbox" checked><label for="repeat">重复铺满</label></div></div></div>${actions("生成水印图片")}</div>
-<div class="status-line" id="status" role="status" aria-live="polite" hidden></div>${resultBlock(
-        "导出结果",
-        [
-          ["文件大小", "output-size"],
-          ["输出尺寸", "output-dimensions"]
-        ]
-      )}`,
-      `<article class="article"><h2>资料水印建议怎么写</h2><p>写清接收方、具体用途和当天日期，例如“仅供某平台账户核验使用｜当天日期”。不要把“他用无效”理解为技术或法律上的绝对保护。</p><h2>水印不能解决什么</h2><p>可见水印仍可能被裁剪、覆盖或修复。证件号、住址、人脸等不必要信息应另外打码；确需提交时，也应确认接收方身份和保存期限。</p><h2>导出前检查</h2><ul><li>文字完整，没有超出画布。</li><li>必要信息仍然可读，但水印覆盖范围足够。</li><li>JPG 的透明区域会以白色合成，PNG 和 WebP 可保留透明区域。</li></ul></article>${related(
-        ["remove-exif", "compress", "resize", "convert"]
-      )}`,
-      `<section><h2>隐私边界</h2><p>当前页面不加载第三方广告或统计脚本；若以后改变，会先更新隐私政策。</p></section><section><h2>重要提醒</h2><p>水印只能降低直接挪用风险，不能保证阻止滥用。</p></section>`
-    );
-  }
+  body = toolLayout(
+    tool,
+    "资料分享",
+    "在图片上添加用途说明、接收方或日期等水印文字。可调整字号、透明度、角度和重复铺满方式。",
+    `${dropzone(
+      "选择或拖入一张资料图片",
+      "支持静态 JPG、PNG、WebP"
+    )}${preview("canvas", "水印预览会显示在这里")}
+<div class="controls">
+  <div class="control-grid">
+    <div class="control-group full">
+      <label for="watermark-text">水印文字</label>
+      <input
+        id="watermark-text"
+        value="仅供资料审核使用"
+        maxlength="80"
+        autocomplete="off"
+      >
+      <span class="hint">例如：仅供某平台实名认证使用｜2026-08-25</span>
+    </div>
+
+    <div class="control-group">
+      <label for="font-size">字号 <span id="font-size-value">48</span></label>
+      <input
+        id="font-size"
+        type="range"
+        min="18"
+        max="120"
+        value="48"
+      >
+    </div>
+
+    <div class="control-group">
+      <label for="opacity">透明度 <span id="opacity-value">38%</span></label>
+      <input
+        id="opacity"
+        type="range"
+        min="10"
+        max="90"
+        value="38"
+      >
+    </div>
+
+    <div class="control-group">
+      <label for="angle">旋转角度 <span id="angle-value">-25°</span></label>
+      <input
+        id="angle"
+        type="range"
+        min="-60"
+        max="60"
+        value="-25"
+      >
+    </div>
+
+    <div class="control-group">
+      <label for="color">文字颜色</label>
+      <input
+        id="color"
+        type="color"
+        value="#b3261e"
+      >
+    </div>
+
+    <div class="control-group">
+      <label for="output-format">输出格式</label>
+      <select id="output-format">
+        <option value="image/jpeg">JPG</option>
+        <option value="image/png">PNG</option>
+        <option value="image/webp">WebP</option>
+      </select>
+    </div>
+
+    <div class="control-group">
+      <div class="inline-check">
+        <input
+          id="repeat"
+          type="checkbox"
+          checked
+        >
+        <label for="repeat">重复铺满</label>
+      </div>
+    </div>
+  </div>
+
+  ${actions("生成水印图片")}
+</div>
+
+<div
+  class="status-line"
+  id="status"
+  role="status"
+  aria-live="polite"
+  hidden
+></div>
+
+${resultBlock(
+  "导出结果",
+  [
+    ["文件大小", "output-size"],
+    ["输出尺寸", "output-dimensions"]
+  ]
+)}`,
+    `<article class="article">
+  <h2>水印文字怎么写</h2>
+  <p>可以写明用途、接收方和日期，例如“仅供某平台实名认证使用｜2026-08-25”。尽量写得具体，避免只使用“仅供使用”这类含义不清的文字。</p>
+
+  <h2>水印能起什么作用</h2>
+  <p>可见水印可以增加图片被直接挪作其他用途的难度，但仍可能被裁剪、覆盖或修复。对于证件号、住址等不需要提供的信息，建议另外打码。</p>
+
+  <h2>导出前建议检查</h2>
+  <ul>
+    <li>水印文字是否完整、清晰。</li>
+    <li>重要内容是否仍然能够正常阅读。</li>
+    <li>水印是否覆盖到图片的主要区域。</li>
+    <li>如果输出 JPG，透明区域会使用白色背景合成。</li>
+  </ul>
+</article>
+
+${related([
+  "remove-exif",
+  "compress",
+  "resize",
+  "convert"
+])}`,
+    `<section>
+  <h2>图片处理</h2>
+  <p>图片在当前浏览器中读取和生成，无需上传到本站。</p>
+</section>
+
+<section>
+  <h2>使用提示</h2>
+  <p>水印不能完全阻止图片被复制或修改，重要资料仍应只提供给可信的接收方。</p>
+</section>`
+  );
+}
 
   if (tool.slug === "resize") {
     body = toolLayout(
