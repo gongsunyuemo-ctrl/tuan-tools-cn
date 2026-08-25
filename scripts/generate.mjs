@@ -93,10 +93,9 @@ const tools = [
   },
   {
     slug: "remove-exif",
-    name: "EXIF 查看与清除",
-    short: "清除 EXIF",
-    description:
-      "检查常见拍摄信息，隐藏精确 GPS，并重新编码生成新副本。",
+name: "照片信息查看与清除",
+short: "清除照片信息",
+description: "查看照片中的常见拍摄信息，并生成不复制原 EXIF 的新文件。",
     script: "exif.js",
     category: "SecurityApplication"
   }
@@ -656,31 +655,92 @@ ${related([
     );
   }
 
-  if (tool.slug === "remove-exif") {
-    body = toolLayout(
-      tool,
-      "照片隐私",
-      "先查看浏览器能够识别的常见拍摄信息，再重新编码像素，生成不复制原 EXIF 的新文件。",
-      `${dropzone(
-        "选择或拖入一张照片",
-        "GPS 坐标不会自动展开；最大 30 MB"
-      )}${preview("img", "照片预览会显示在这里")}
-<section id="metadata" aria-labelledby="metadata-title" hidden><h2 id="metadata-title">检测到的信息</h2><table class="meta-table"><tbody id="meta-body"></tbody></table></section>
-<div class="controls"><div class="control-grid"><div class="control-group"><label for="output-format">输出格式</label><select id="output-format"><option value="image/jpeg">JPG</option><option value="image/png">PNG</option><option value="image/webp">WebP</option></select></div><div class="control-group"><label for="quality">画质 <span id="quality-value">92%</span></label><input id="quality" type="range" min="30" max="100" value="92"></div></div>${actions("清除并生成副本")}</div>
-<div class="status-line" id="status" role="status" aria-live="polite" hidden></div>${resultBlock(
-        "清除结果",
-        [
-          ["新文件大小", "output-size"],
-          ["输出格式", "output-format-name"],
-          ["结果检查", "verification"]
-        ]
-      )}`,
-      `<article class="article"><h2>照片信息可能包括什么</h2><p>常见 EXIF 字段包括拍摄时间、相机或手机型号、镜头、方向、曝光参数和 GPS。精确坐标默认隐藏，只有主动点击后才显示。</p><h2>清除方法与验证</h2><p>工具把可见像素绘制到新画布，再由浏览器编码。JPG 输出会重新检查是否仍存在 EXIF APP1 段；PNG 和 WebP 输出说明为“没有复制原元数据”，不声称进行了完整取证级分析。</p><h2>清除 EXIF 不等于匿名</h2><p>画面中的人脸、门牌、文件编号和环境特征仍可能暴露身份。隐写数据、专有元数据和平台再次写入的信息也不在完整保证范围内。</p></article>${related(
-        ["watermark", "compress", "resize", "convert"]
-      )}`,
-      `<section><h2>读取范围</h2><p>只读取 JPEG APP1 段内的有限常见标签，并限制字段长度和目录数量。</p></section><section><h2>使用边界</h2><p>不要把输出作为取证材料，也不要删除唯一的原文件。</p></section>`
-    );
-  }
+if (tool.slug === "remove-exif") {
+  body = toolLayout(
+    tool,
+    "照片信息",
+    "查看照片中常见的拍摄信息，并生成一个不复制原 EXIF 的新文件。",
+    `${dropzone(
+      "选择或拖入一张照片",
+      "支持静态 JPG、PNG、WebP；最大 30 MB"
+    )}${preview("img", "照片预览会显示在这里")}
+<section id="metadata" aria-labelledby="metadata-title" hidden>
+  <h2 id="metadata-title">照片信息</h2>
+  <table class="meta-table">
+    <tbody id="meta-body"></tbody>
+  </table>
+</section>
+
+<div class="controls">
+  <div class="control-grid">
+    <div class="control-group">
+      <label for="output-format">输出格式</label>
+      <select id="output-format">
+        <option value="image/jpeg">JPG</option>
+        <option value="image/png">PNG</option>
+        <option value="image/webp">WebP</option>
+      </select>
+    </div>
+
+    <div class="control-group">
+      <label for="quality">画质 <span id="quality-value">92%</span></label>
+      <input
+        id="quality"
+        type="range"
+        min="30"
+        max="100"
+        value="92"
+      >
+    </div>
+  </div>
+
+  ${actions("清除照片信息")}
+</div>
+
+<div
+  class="status-line"
+  id="status"
+  role="status"
+  aria-live="polite"
+  hidden
+></div>
+
+${resultBlock(
+  "处理结果",
+  [
+    ["新文件大小", "output-size"],
+    ["输出格式", "output-format-name"],
+    ["照片信息", "verification"]
+  ]
+)}`,
+    `<article class="article">
+  <h2>照片里可能包含哪些信息</h2>
+  <p>部分照片可能保存拍摄时间、设备型号、镜头、曝光参数和 GPS 位置等信息。本站只显示能够识别的常见项目。</p>
+
+  <h2>清除后会发生什么</h2>
+  <p>工具会重新生成图片文件，不复制原照片中的常见 EXIF 信息。图片内容本身不会因为清除 EXIF 而自动打码或匿名化。</p>
+
+  <h2>分享照片前还要检查什么</h2>
+  <p>照片画面中的人脸、门牌、文件编号、二维码和周围环境仍可能包含隐私信息。分享前建议同时检查图片内容本身。</p>
+</article>
+
+${related([
+  "watermark",
+  "compress",
+  "resize",
+  "convert"
+])}`,
+    `<section>
+  <h2>位置信息</h2>
+  <p>如果照片中检测到 GPS 坐标，默认不会直接展开显示。</p>
+</section>
+
+<section>
+  <h2>保留原图</h2>
+  <p>建议先保留原始照片，确认新文件正常后再决定如何使用。</p>
+</section>`
+  );
+}
 
   await writePage(
     `${tool.slug}/index.html`,
@@ -694,9 +754,9 @@ ${related([
 const methodology = {
   kind: "page",
   path: "/methodology/",
-  title: `测试方法与处理边界 - ${config.siteName}`,
+  title: `测试与功能说明 - ${config.siteName}`,
   description:
-    "图安工具的自动测试范围、待完成的浏览器检查、隐私边界和已知限制。"
+    `${config.siteName}的功能测试范围、浏览器兼容检查和已知限制。`
 };
 
 await writePage(
@@ -704,7 +764,41 @@ await writePage(
   pageShell(
     methodology,
     "methodology",
-    `<section class="page-head"><div class="page-head-inner"><p class="eyebrow">可复核说明</p><h1>测试方法与处理边界</h1><p>这里区分已经自动验证的项目与仍需人工完成的真实设备检查。</p></div></section><section class="section"><article class="article"><h2>已经自动验证</h2><ul><li>HTML 内部链接、脚本、样式路径、JSON-LD 与站点地图。</li><li>生成文件与当前配置一致，发布目录只包含逐文件白名单。</li><li>JPG、PNG、WebP 文件签名、尺寸、JPEG 填充字节和超长头部。</li><li>动画 PNG、动画 WebP、伪装文件、超限尺寸和损坏 EXIF 的拒绝或提示。</li><li>错误 MIME 修正、零宽水印拒绝和文件切换状态清理。</li></ul><h2>尚需真实设备检查</h2><p>自动测试不等于浏览器兼容结论。发布前仍需在最新版 Chrome、Edge、Firefox、Safari、iOS Safari、Android Chrome，以及微信和 QQ 内置浏览器检查选择文件、处理、打开结果和下载；完成情况记录在代码包的上线清单中。</p><h2>明确限制</h2><ul><li>不处理动画 PNG、动画 WebP、GIF 或多帧照片格式。</li><li>不保证保留 ICC、DPI、XMP、版权字段或完整色彩外观。</li><li>单边上限 8192 像素，总像素上限 2400 万，极端宽高比会被拒绝。</li><li>浏览器 Canvas 编码过程无法可靠中途终止，因此处理期间会锁定参数。</li><li>Canvas 重新编码不是取证级元数据清理。</li></ul><h2>更新记录</h2><p>最近一次重要更新：${config.lastModified}。修正了文件结构解析、任务状态、发布校验、缓存版本和可访问性。</p></article></section>`
+    `<section class="page-head">
+  <div class="page-head-inner">
+    <p class="eyebrow">功能说明</p>
+    <h1>测试与使用范围</h1>
+    <p>这里说明本站已经检查的功能，以及使用时需要注意的限制。</p>
+  </div>
+</section>
+
+<section class="section">
+  <article class="article">
+    <h2>已经检查的功能</h2>
+    <ul>
+      <li>常用页面、链接、样式和脚本能够正常加载。</li>
+      <li>支持识别静态 JPG、PNG 和 WebP 图片。</li>
+      <li>会拒绝伪装文件、损坏文件和超过处理限制的图片。</li>
+      <li>动画 PNG 和动画 WebP 不会被静默处理成单帧图片。</li>
+      <li>切换图片或修改参数时，会清理旧的处理结果。</li>
+    </ul>
+
+    <h2>仍需注意浏览器差异</h2>
+    <p>不同浏览器、手机系统和内置浏览器的文件选择、内存限制、图片编码和下载行为可能不同。本站会持续检查常见桌面和移动浏览器，但无法保证所有设备上的表现完全一致。</p>
+
+    <h2>当前限制</h2>
+    <ul>
+      <li>仅支持静态 JPG、PNG 和 WebP，不处理 GIF 或其他多帧图片。</li>
+      <li>单边尺寸最多 8192 像素，总像素最多 2400 万。</li>
+      <li>重新生成图片后，ICC、DPI、XMP 等附加信息可能发生变化或不再保留。</li>
+      <li>图片处理能力还会受到设备内存和浏览器实现的影响。</li>
+      <li>照片信息清除适用于日常分享，不应作为专业取证工具使用。</li>
+    </ul>
+
+    <h2>更新日期</h2>
+    <p>最近更新：${config.lastModified}</p>
+  </article>
+</section>`
   )
 );
 
@@ -712,7 +806,7 @@ const about = {
   kind: "page",
   path: "/about/",
   title: `关于${config.siteName}`,
-  description: `${config.siteName}提供五个浏览器本地运行的中文图片处理工具，并公开说明功能和隐私边界。`
+  description: `${config.siteName}提供浏览器本地运行的中文图片处理工具，支持压缩、水印、尺寸调整、格式转换和照片信息清理。`
 };
 
 await writePage(
@@ -720,15 +814,32 @@ await writePage(
   pageShell(
     about,
     "about",
-    `<section class="page-head"><div class="page-head-inner"><p class="eyebrow">关于本站</p><h1>把图片处理留在当前设备</h1><p>${escapeHtml(
-      config.siteName
-    )}由${escapeHtml(
-      config.operatorName
-    )}维护，专注于无需注册、无需上传源图片即可完成的常见任务。</p></div></section><section class="section"><article class="article"><h2>为什么只做五个工具</h2><p>首个版本集中在压缩、水印、尺寸、格式和 EXIF，便于把文件边界、移动端表现和下载流程真正测清楚。只有现有工具稳定、被真实使用后，才会扩展同一主题内的新功能。</p><h2>处理原则</h2><ul><li>本站代码不主动上传用户选择的图片。</li><li>不接入来源不明的运行时依赖。</li><li>不把重新编码描述成无损，也不把水印描述成绝对保护。</li><li>关键限制和测试范围公开在测试方法页。</li></ul><h2>联系与反馈</h2><p>发现损坏文件、浏览器兼容或文案问题，可通过<a href="${escapeHtml(
-      config.contactUrl
-    )}" rel="nofollow">公开反馈渠道</a>联系维护者。请勿在反馈中上传证件、私人照片或其他敏感文件。</p><h2>源代码</h2><p>站点源代码和变更记录发布在<a href="${escapeHtml(
-      config.repositoryUrl
-    )}" rel="nofollow">代码仓库</a>。公开源代码有助于检查处理逻辑，但不代表所有浏览器和文件都没有未知问题。</p></article></section>`
+    `<section class="page-head">
+  <div class="page-head-inner">
+    <p class="eyebrow">关于本站</p>
+    <h1>简单、直接的图片处理工具</h1>
+    <p>${escapeHtml(config.siteName)}由${escapeHtml(config.operatorName)}维护，提供常用的图片处理功能，无需注册即可使用。</p>
+  </div>
+</section>
+
+<section class="section">
+  <article class="article">
+    <h2>可以做什么</h2>
+    <p>目前提供图片压缩、添加水印、修改尺寸、格式转换和照片信息清理等工具。大部分操作都在当前浏览器中完成。</p>
+
+    <h2>为什么采用本地处理</h2>
+    <p>对于常见图片处理任务，没有必要先把源图片上传到服务器。本站工具会尽量直接在当前设备的浏览器中读取和生成图片，减少不必要的文件传输。</p>
+
+    <h2>使用前请注意</h2>
+    <p>不同浏览器、设备和图片文件的兼容情况可能不同。处理完成后，建议先预览并重新打开下载结果，确认尺寸、格式和画面内容符合需要。</p>
+
+    <h2>联系与反馈</h2>
+    <p>如果遇到文件无法处理、浏览器兼容或页面文案问题，可以通过<a href="${escapeHtml(config.contactUrl)}" rel="nofollow">反馈渠道</a>联系维护者。请不要在反馈中上传证件、私人照片或其他敏感文件。</p>
+
+    <h2>源代码</h2>
+    <p>本站源代码和更新记录发布在<a href="${escapeHtml(config.repositoryUrl)}" rel="nofollow">代码仓库</a>，欢迎查看和反馈问题。</p>
+  </article>
+</section>`
   )
 );
 
@@ -736,7 +847,7 @@ const privacy = {
   kind: "page",
   path: "/privacy/",
   title: `隐私政策 - ${config.siteName}`,
-  description: `${config.siteName}隐私政策，说明本地图片处理、浏览器临时状态、GitHub Pages托管和第三方服务边界。`
+  description: `${config.siteName}隐私政策，说明图片本地处理、网站托管以及当前使用的第三方服务。`
 };
 
 await writePage(
@@ -744,11 +855,32 @@ await writePage(
   pageShell(
     privacy,
     "privacy",
-    `<section class="page-head"><div class="page-head-inner"><p class="eyebrow">隐私政策</p><h1>图片由浏览器处理</h1><p>更新日期：${config.lastModified}。本政策描述当前发布版本的实际行为。</p></div></section><section class="section"><article class="article"><h2>本站处理哪些数据</h2><p>用户主动选择的图片、文件名、水印文字和输出参数由页面脚本在当前浏览器中读取。本站代码没有图片上传接口，不会主动把这些内容发送到本站或第三方服务器。</p><h2>浏览器临时状态</h2><p>处理时，浏览器内存会保存解码图片、Canvas 和 Blob 临时地址。页面刷新或关闭后通常会释放；浏览器的前进后退缓存可能在当前会话内短暂保留页面状态。下载后的文件由用户自行管理。</p><h2>托管与访问日志</h2><p>本站使用 GitHub Pages 托管。浏览器访问页面时会连接 GitHub 的基础设施，GitHub 可能处理 IP 地址、请求时间、浏览器信息和访问路径。具体处理方式和保留期限由<a href="https://docs.github.com/site-policy/privacy-policies/github-general-privacy-statement" rel="nofollow">GitHub 隐私声明</a>说明。本站会根据实际使用的服务和适用要求维护本政策，不把“图片没有上传”与“页面访问完全不产生网络数据”混为一谈。</p><h2>Cookie、统计与广告</h2><p>当前版本不加载统计、广告或个性化推荐脚本，也不设置本站 Cookie。以后如新增服务，将在启用前说明服务提供方、目的、数据种类、保存期限、退出方式和必要的同意机制。第三方脚本不得与含有文件预览和 Canvas 的工具工作区共享页面权限。</p><h2>联系我们</h2><p>隐私问题可通过<a href="${escapeHtml(
-      config.contactUrl
-    )}" rel="nofollow">本站反馈渠道</a>联系${escapeHtml(
-      config.operatorName
-    )}。请不要发送原始证件或私人照片。</p></article></section>`
+    `<section class="page-head">
+  <div class="page-head-inner">
+    <p class="eyebrow">隐私政策</p>
+    <h1>图片在当前浏览器中处理</h1>
+    <p>更新日期：${config.lastModified}</p>
+  </div>
+</section>
+
+<section class="section">
+  <article class="article">
+    <h2>图片如何处理</h2>
+    <p>你选择的图片、文件名、水印文字和处理参数由当前浏览器读取。本站目前没有图片上传接口，也不会主动把你选择的图片发送到本站或第三方服务器。</p>
+
+    <h2>处理过程中产生的临时数据</h2>
+    <p>图片处理时，浏览器需要在当前设备中临时保存图片数据和生成结果。这些内容通常会在页面关闭、刷新或浏览器释放资源后清理。已经下载到设备中的文件由你自行管理。</p>
+
+    <h2>网站访问信息</h2>
+    <p>本站使用 GitHub Pages 托管。打开网页时，浏览器需要连接 GitHub 的服务器，因此 GitHub 可能处理 IP 地址、请求时间、浏览器信息和访问路径等常规访问数据。具体规则请参考<a href="https://docs.github.com/site-policy/privacy-policies/github-general-privacy-statement" rel="nofollow">GitHub 隐私声明</a>。</p>
+
+    <h2>Cookie、统计与广告</h2>
+    <p>当前版本不加载第三方统计、广告或个性化推荐脚本，也不设置本站 Cookie。如果以后增加相关服务，本政策会根据实际使用情况更新。</p>
+
+    <h2>联系我们</h2>
+    <p>如果对隐私处理方式有疑问，可以通过<a href="${escapeHtml(config.contactUrl)}" rel="nofollow">反馈渠道</a>联系${escapeHtml(config.operatorName)}。请不要通过反馈渠道发送原始证件、私人照片或其他敏感文件。</p>
+  </article>
+</section>`
   )
 );
 
