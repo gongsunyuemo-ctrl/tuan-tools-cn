@@ -185,20 +185,16 @@ const home = {
   kind: "home", path: "/", title: `${config.siteName}｜图片压缩、水印、尺寸、格式与 EXIF 工具`, ogTitle: `${config.siteName}：浏览器本地图片处理`,
   description: "五个中文图片工具：压缩到指定KB、资料水印、尺寸裁剪、JPG/PNG/WebP转换和EXIF清除。图片处理在当前浏览器完成。"
 };
-const homeBody = `<section class="home-top">
-  <div class="home-top-inner">
-    <div class="home-intro">
-      <p class="eyebrow">在线图片工具</p>
-      <h1>${escapeHtml(config.siteName)}</h1>
-      <p class="home-summary">压缩图片、添加水印、修改尺寸、转换格式和清除照片信息。</p>
-      <div class="home-facts" aria-label="服务特点"><span>浏览器本地处理</span><span>无需注册</span><span>免费使用</span></div>
-      <div class="home-actions"><a class="button" href="${asset("/compress/")}">开始压缩图片</a><a class="home-text-link" href="#tools">查看全部工具</a></div>
-    </div>
+const homeBody = `<section class="tool-directory" id="tools"><div class="tool-directory-inner">
+  <div class="home-intro">
+    <p class="eyebrow">在线图片工具</p>
+    <h1>${escapeHtml(config.siteName)}</h1>
+    <p class="home-summary">压缩图片、添加水印、修改尺寸、转换格式和清除照片信息。</p>
+    <div class="home-facts" aria-label="服务特点"><span>浏览器本地处理</span><span>无需注册</span><span>免费使用</span></div>
+    <div class="home-actions"><a class="button" href="${asset("/compress/")}">开始压缩图片</a><a class="home-text-link" href="#tool-list">查看全部工具</a></div>
   </div>
-</section>
-<section class="tool-directory" id="tools"><div class="tool-directory-inner">
   <div class="directory-heading"><div><p class="eyebrow">全部工具</p><h2>选择图片处理任务</h2></div><p>支持静态 JPG、PNG 和 WebP，文件由当前浏览器处理。</p></div>
-  <div class="tool-grid">
+  <div class="tool-grid" id="tool-list">
 ${tools.map((tool, index) => `<a class="tool-card reveal" href="${asset(`/${tool.slug}/`)}"><span class="tool-symbol" aria-hidden="true">${["KB", "水印", "PX", "格式", "EXIF"][index]}</span><span class="tool-card-copy"><strong>${tool.name}</strong><span>${tool.description}</span></span><span class="tool-arrow" aria-hidden="true">→</span></a>`).join("\n")}
   </div>
 </div></section>
