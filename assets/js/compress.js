@@ -269,22 +269,22 @@
       let reused = false;
 
       if (
-        loaded.type === type &&
-        sourceFile.size <= targetBytes
-      ) {
-        blob = sourceFile.slice(
-          0,
-          sourceFile.size,
-          loaded.type
-        );
+  loaded.type === type &&
+  sourceFile.size <= targetBytes
+) {
+  blob = sourceFile.slice(
+    0,
+    sourceFile.size,
+    type
+  );
 
-        canvas = {
-          width,
-          height
-        };
+  canvas = {
+    width,
+    height
+  };
 
-        reused = true;
-      } else {
+  reused = true;
+} else {
         for (
           let pass = 0;
           pass < 4;
