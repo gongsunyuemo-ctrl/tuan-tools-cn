@@ -806,7 +806,8 @@ const about = {
   kind: "page",
   path: "/about/",
   title: `关于${config.siteName}`,
-  description: `${config.siteName}提供浏览器本地运行的中文图片处理工具，支持压缩、水印、尺寸调整、格式转换和照片信息清理。`
+  description:
+    `${config.siteName}提供简单、直接的中文图片处理工具，支持图片压缩、添加水印、修改尺寸、格式转换和照片信息清理。`
 };
 
 await writePage(
@@ -817,27 +818,27 @@ await writePage(
     `<section class="page-head">
   <div class="page-head-inner">
     <p class="eyebrow">关于本站</p>
-    <h1>简单、直接的图片处理工具</h1>
-    <p>${escapeHtml(config.siteName)}由${escapeHtml(config.operatorName)}维护，提供常用的图片处理功能，无需注册即可使用。</p>
+    <h1>把图片处理留在当前设备</h1>
+    <p>${escapeHtml(config.siteName)}提供简单、直接的图片处理功能，无需注册，大部分操作都可以直接在当前浏览器中完成。</p>
   </div>
 </section>
 
 <section class="section">
   <article class="article">
     <h2>可以做什么</h2>
-    <p>目前提供图片压缩、添加水印、修改尺寸、格式转换和照片信息清理等工具。大部分操作都在当前浏览器中完成。</p>
+    <p>目前提供图片压缩、添加水印、修改尺寸、格式转换和照片信息清理等常用工具。选择图片后即可开始处理。</p>
 
-    <h2>为什么采用本地处理</h2>
-    <p>对于常见图片处理任务，没有必要先把源图片上传到服务器。本站工具会尽量直接在当前设备的浏览器中读取和生成图片，减少不必要的文件传输。</p>
+    <h2>图片在哪里处理</h2>
+    <p>大部分图片处理都直接在当前设备的浏览器中完成，不需要先把源图片上传到本站服务器。这样可以减少不必要的文件传输，也方便处理一些不希望随意上传的图片。</p>
 
-    <h2>使用前请注意</h2>
-    <p>不同浏览器、设备和图片文件的兼容情况可能不同。处理完成后，建议先预览并重新打开下载结果，确认尺寸、格式和画面内容符合需要。</p>
+    <h2>使用时需要注意什么</h2>
+    <p>不同浏览器、手机和图片文件的兼容情况可能不同。处理完成后，建议先预览结果，再打开下载后的文件检查尺寸、格式、清晰度和画面内容是否符合需要。</p>
 
     <h2>联系与反馈</h2>
-    <p>如果遇到文件无法处理、浏览器兼容或页面文案问题，可以通过<a href="${escapeHtml(config.contactUrl)}" rel="nofollow">反馈渠道</a>联系维护者。请不要在反馈中上传证件、私人照片或其他敏感文件。</p>
+    <p>如果遇到图片无法处理、浏览器兼容或页面显示问题，可以通过<a href="${escapeHtml(config.contactUrl)}" rel="nofollow">公开反馈渠道</a>联系维护者。请不要在反馈中上传证件、私人照片或其他敏感文件。</p>
 
     <h2>源代码</h2>
-    <p>本站源代码和更新记录发布在<a href="${escapeHtml(config.repositoryUrl)}" rel="nofollow">代码仓库</a>，欢迎查看和反馈问题。</p>
+    <p>本站源代码和更新记录发布在<a href="${escapeHtml(config.repositoryUrl)}" rel="nofollow">代码仓库</a>，可以查看更新记录或反馈问题。</p>
   </article>
 </section>`
   )
