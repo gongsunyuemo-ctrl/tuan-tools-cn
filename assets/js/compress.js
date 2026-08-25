@@ -272,11 +272,7 @@
   loaded.type === type &&
   sourceFile.size <= targetBytes
 ) {
-  blob = sourceFile.slice(
-  0,
-  sourceFile.size,
-  loaded.type
-);
+  blob = sourceFile.slice(0, sourceFile.size, loaded.type);
 
   canvas = {
     width,
