@@ -134,7 +134,9 @@
     const view = new DataView(buffer);
     const dimensions = type === "image/jpeg" ? parseJpegDimensions(view) : type === "image/png" ? parsePngDimensions(view) : parseWebpDimensions(view);
     if (!dimensions || !dimensions.width || !dimensions.height) throw new Error("无法读取图片尺寸，文件可能损坏或格式不受支持。");
-    if (dimensions.animated) throw new Error("暂不处理动画图片，请先导出为单帧 JPG、PNG 或 WebP。");
+    if (dimensions.animated) {
+  throw new Error("暂不支持动画图片，请先保存为静态 JPG、PNG 或 WebP 后再处理。");
+}
     validateDimensions(dimensions.width, dimensions.height, MAX_SOURCE_PIXELS, "原图");
     return { type, width: dimensions.width, height: dimensions.height };
   }
@@ -143,8 +145,12 @@
     const name = label || "图片";
     if (!Number.isFinite(width) || !Number.isFinite(height) || width < 1 || height < 1) throw new Error(name + "尺寸无效。");
     if (width > MAX_SIDE || height > MAX_SIDE) throw new Error(name + "单边不能超过 " + MAX_SIDE + " 像素。");
-    if (width * height > maxPixels) throw new Error(name + "不能超过 " + Math.round(maxPixels / 1_000_000) + " 百万像素。");
-    if (Math.max(width, height) / Math.min(width, height) > MAX_ASPECT_RATIO) throw new Error(name + "宽高比过大，请先裁剪超长图片。");
+    if (width * height > maxPixels) {
+  throw new Error(name + "总像素不能超过 2400 万，请适当减小图片尺寸。");
+}
+    if (Math.max(width, height) / Math.min(width, height) > MAX_ASPECT_RATIO) {
+  throw new Error(name + "的宽高比例过于极端，请先裁剪或缩短图片后再处理。");
+}
   }
 
   async function loadImage(file) {
@@ -187,7 +193,7 @@
     canvas.height = Math.round(height);
     const ctx = canvas.getContext("2d", { alpha: alpha !== false, willReadFrequently: false });
     if (!ctx || canvas.width !== Math.round(width) || canvas.height !== Math.round(height)) {
-      throw new Error("当前浏览器无法创建该尺寸的画布，请减小图片尺寸。");
+      throw new Error("当前浏览器无法处理这么大的图片，请减小图片尺寸后重试。");
     }
     ctx.imageSmoothingEnabled = true;
     ctx.imageSmoothingQuality = "high";
@@ -326,7 +332,7 @@
       notice.id = "embedding-warning";
       notice.className = "notice embedding-warning";
       notice.setAttribute("role", "alert");
-      notice.textContent = "为保护本地图片，本工具不能在其他网页的嵌入框架中运行。请直接打开本站页面。";
+      notice.textContent = "为保护你选择的图片，本工具不能在其他网站内嵌打开。请直接访问本站后使用。";
       workspace.insertBefore(notice, workspace.firstChild);
     }
     return false;
