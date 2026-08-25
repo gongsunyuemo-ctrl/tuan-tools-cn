@@ -328,7 +328,7 @@ function preview(kind, emptyText) {
 }
 
 function actions(runLabel) {
-  return `<div class="button-row"><button class="button" id="run" type="button" disabled>${runLabel}</button><button class="button ghost" id="reset" type="button" hidden>重新开始</button></div>`;
+  return `<div class="button-row"><button class="button" id="run" type="button" disabled>${runLabel}</button><button class="button ghost" id="reset" type="button" hidden>更换图片</button></div>`;
 }
 
 function resultBlock(title, rows) {
@@ -343,7 +343,7 @@ function resultBlock(title, rows) {
         }>${label}</span><strong class="result-value" id="${id}"></strong></div>`
     )
     .join("\n  ")}
-  <div class="result-actions"><button class="button" id="download" type="button">下载结果</button><button class="button secondary" id="open-result" type="button">打开结果</button></div>
+  <div class="result-actions"><button class="button" id="download" type="button">下载图片</button><button class="button secondary" id="open-result" type="button">查看大图</button></div>
 </section>`;
 }
 
