@@ -273,10 +273,10 @@
   sourceFile.size <= targetBytes
 ) {
   blob = sourceFile.slice(
-    0,
-    sourceFile.size,
-    type
-  );
+  0,
+  sourceFile.size,
+  loaded.type
+);
 
   canvas = {
     width,
