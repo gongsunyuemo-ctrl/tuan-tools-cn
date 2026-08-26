@@ -340,10 +340,8 @@
 
     const visible =
       widest >= 1 &&
-      blockHeight <=
-        height * 0.9 &&
-      widest <=
-        width * 0.9;
+      blockHeight <= height * 0.9 &&
+      widest <= width * 0.9;
 
     return {
       lines: wrapped.lines,
