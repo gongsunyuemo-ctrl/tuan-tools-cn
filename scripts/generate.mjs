@@ -117,7 +117,7 @@ function structuredData(page) {
   return items.map((item) => JSON.stringify(item).replace(/[<>&\u2028\u2029]/g, (character) => ({ "<": "\\u003c", ">": "\\u003e", "&": "\\u0026", "\u2028": "\\u2028", "\u2029": "\\u2029" })[character]));
 }
 
-const analyticsId = "G-4QJD4CQ5DT";
+const analyticsId = "G-40JD4CQ5DT";
 const analyticsBootstrap = `window.dataLayer = window.dataLayer || [];
 function gtag(){dataLayer.push(arguments);}
 gtag('js', new Date());
