@@ -108,10 +108,6 @@ function structuredData(page) {
       { "@type": "ListItem", position: 1, name: "全部工具", item: absolute("/") },
       { "@type": "ListItem", position: 2, name: page.tool.name, item: absolute(`/${page.tool.slug}/`) }
     ] });
-    const faq = faqByTool[page.tool.slug] || [];
-    if (faq.length) {
-      items.push({ "@context": "https://schema.org", "@type": "FAQPage", mainEntity: faq.map(([question, answer]) => ({ "@type": "Question", name: question, acceptedAnswer: { "@type": "Answer", text: answer } })) });
-    }
   }
 
   return items.map((item) => JSON.stringify(item).replace(/[<>&\u2028\u2029]/g, (character) => ({ "<": "\\u003c", ">": "\\u003e", "&": "\\u0026", "\u2028": "\\u2028", "\u2029": "\\u2029" })[character]));
@@ -241,13 +237,26 @@ function faqSection(slug) {
   return `<section class="section compact"><article class="article"><h2>常见问题</h2>${items.map(([question, answer]) => `<h3>${escapeHtml(question)}</h3><p>${escapeHtml(answer)}</p>`).join("")}</article></section>`;
 }
 
+function promotionBanner() {
+  return `<section class="promotion-band" aria-label="推广">
+  <div class="promotion-inner">
+    <a class="promotion-banner" href="https://huyuejsq.co/" target="_blank" rel="sponsored noopener noreferrer" aria-label="推广：访问虎跃加速网站">
+      <span class="promotion-label">推广</span>
+      <span class="promotion-copy"><strong>虎跃加速</strong><span>多平台网络连接工具，查看产品介绍与下载方式</span></span>
+      <span class="promotion-action">访问网站 <span aria-hidden="true">→</span></span>
+    </a>
+  </div>
+</section>`;
+}
+
 function toolLayout(tool, eyebrow, intro, panel, article, aside) {
   return `${pageHead(tool, eyebrow, intro)}
 <div class="workspace"><div class="tool-panel">
   <noscript><p class="notice">图片处理需要启用 JavaScript；下方使用说明仍可正常阅读。</p></noscript>
   ${panel}
   ${article}
-</div><aside class="side-context" aria-label="使用提示">${aside}</aside></div>`;
+</div><aside class="side-context" aria-label="使用提示">${aside}</aside></div>
+${promotionBanner()}`;
 }
 
 const home = {
@@ -267,6 +276,7 @@ const homeBody = `<section class="tool-directory" id="tools"><div class="tool-di
 ${tools.map((tool, index) => `<a class="tool-card reveal" href="${asset(`/${tool.slug}/`)}"><span class="tool-symbol" aria-hidden="true">${["KB", "水印", "PX", "格式", "EXIF"][index]}</span><span class="tool-card-copy"><strong>${tool.name}</strong><span>${tool.description}</span></span><span class="tool-arrow" aria-hidden="true">→</span></a>`).join("\n")}
   </div>
 </div></section>
+${promotionBanner()}
 <section class="workflow-band"><div class="workflow-band-inner"><img src="${staticAsset("/assets/img/hero-workbench.webp")}" width="1672" height="941" loading="lazy" alt="桌面上的手机、照片、色卡和裁切尺"><div><p class="eyebrow">隐私与处理方式</p><h2>图片在当前浏览器中处理</h2><p>本站代码不设置图片上传接口。所选文件由浏览器读取、处理和导出；页面访问会经过 GitHub Pages，并使用 Google Analytics 统计基础访问数据，但不会把你在工具中选择的图片、图片内容或水印文字作为统计参数发送。</p><a href="${asset("/methodology/")}">了解安全与隐私说明 <span aria-hidden="true">→</span></a></div></div></section>
 <section class="section compact"><div class="evidence-strip"><div class="evidence-item"><strong>无需注册</strong><p>打开工具即可使用，不要求创建账号。</p></div><div class="evidence-item"><strong>结果先预览</strong><p>生成后查看格式、尺寸或体积，再决定是否下载。</p></div><div class="evidence-item"><strong>限制公开说明</strong><p>不把重新编码说成无损，也不承诺水印或 EXIF 清除能解决所有隐私风险。</p></div></div></section>
 <section class="section compact"><article class="article"><h2>常见图片处理问题</h2><h3>怎么把图片压缩到 100KB 或 200KB？</h3><p>进入图片压缩工具，填写目标 KB 后开始处理。工具会先调整编码质量，必要时再缩小像素尺寸。</p><h3>证件或资料图片怎么加用途水印？</h3><p>进入水印工具后填写接收方、用途和日期，可设置重复铺满、透明度、角度和颜色。水印只能降低直接挪用风险，不能替代打码和访问控制。</p><h3>怎么删除照片里的定位和拍摄信息？</h3><p>EXIF 工具可以查看部分常见元数据，并通过重新编码生成不复制原 EXIF 的新文件。删除 EXIF 不等于完全匿名，画面本身仍可能暴露身份。</p></article></section>`;
@@ -308,10 +318,10 @@ const about = { kind: "page", path: "/about/", title: `关于${config.siteName} 
 await writePage("about/index.html", pageShell(about, "about", `<section class="page-head"><div class="page-head-inner"><p class="eyebrow">关于本站</p><h1>简单、透明的浏览器图片工具</h1><p>${escapeHtml(config.siteName)}是一个开源的浏览器端图片处理项目，专注于无需注册、尽量不上传源图片即可完成的常见图片任务。</p></div></section><section class="section"><article class="article"><h2>我们提供什么</h2><p>目前提供图片压缩到指定 KB、证件与资料图片加水印、图片尺寸修改与裁剪、JPG/PNG/WebP 格式转换，以及 EXIF 查看与清除。工具优先保持操作简单，并明确说明画质、元数据和隐私边界。</p><h2>为什么采用浏览器本地处理</h2><p>很多图片任务并不需要把源文件发送到服务器。利用浏览器的文件读取、Canvas 和 Blob 能力，可以在当前设备完成大部分处理，同时减少敏感图片在网络上传输的必要性。</p><h2>我们的处理原则</h2><ul><li>本站代码不设置图片上传接口。</li><li>不要求注册账号后才能使用核心工具。</li><li>不把重新编码描述成无损，也不把水印或 EXIF 清除描述成绝对保护。</li><li>对文件格式、尺寸、动画图片和元数据处理范围明确说明限制。</li></ul><h2>开源与反馈</h2><p>站点源代码和变更记录发布在<a href="${escapeHtml(config.repositoryUrl)}" rel="nofollow">GitHub 代码仓库</a>，用户可以检查主要图片处理逻辑。发现损坏文件、兼容性或文案问题，可通过<a href="${escapeHtml(config.contactUrl)}" rel="nofollow">公开反馈渠道</a>联系维护者。请勿在反馈中上传证件、私人照片或其他敏感文件。</p></article></section>`));
 
 const privacy = { kind: "page", path: "/privacy/", title: `隐私政策 - ${config.siteName}`, description: `${config.siteName}隐私政策，说明本地图片处理、浏览器临时状态、GitHub Pages托管和第三方服务边界。` };
-await writePage("privacy/index.html", pageShell(privacy, "privacy", `<section class="page-head"><div class="page-head-inner"><p class="eyebrow">隐私政策</p><h1>图片由浏览器处理</h1><p>更新日期：${config.lastModified}。本政策描述当前发布版本的实际行为。</p></div></section><section class="section"><article class="article"><h2>本站处理哪些数据</h2><p>用户主动选择的图片、文件名、水印文字和输出参数由页面脚本在当前浏览器中读取。本站代码没有图片上传接口，不会主动把这些内容发送到本站或第三方服务器。</p><h2>浏览器临时状态</h2><p>处理时，浏览器内存会保存解码图片、Canvas 和 Blob 临时地址。页面刷新或关闭后通常会释放；浏览器的前进后退缓存可能在当前会话内短暂保留页面状态。下载后的文件由用户自行管理。</p><h2>托管与访问日志</h2><p>本站使用 GitHub Pages 托管。浏览器访问页面时会连接 GitHub 的基础设施，GitHub 可能处理 IP 地址、请求时间、浏览器信息和访问路径。具体处理方式和保留期限由<a href="https://docs.github.com/site-policy/privacy-policies/github-general-privacy-statement" rel="nofollow">GitHub 隐私声明</a>说明。本站会根据实际使用的服务和适用要求维护本政策，不把“图片没有上传”与“页面访问完全不产生网络数据”混为一谈。</p><h2>统计服务</h2><p>本站使用 Google Analytics 4 了解页面访问量、来源、设备类型和基础页面使用情况，以改进工具和内容。Google Analytics 可能向 Google 发送页面地址、来源页面、浏览器和设备信息、IP 地址衍生的粗略地理位置以及相关技术标识。本站不会主动把用户选择的图片、图片内容、文件名、EXIF 内容、GPS 坐标、水印文字或导出文件作为 Analytics 参数发送。</p><p>Google 对相关数据的处理受其隐私政策和服务条款约束。你可以通过浏览器隐私设置、内容拦截工具或 Google 提供的退出机制限制相关统计。若适用法律要求额外同意机制，本站将根据实际运营地区和访问者范围进行调整。</p><h2>Cookie 与广告</h2><p>本站当前不接入广告或个性化推荐服务。Google Analytics 可能根据浏览器、地区和 Google 的当前实现使用 Cookie 或其他技术标识；本站不会利用统计数据建立用户画像，也不会把图片处理内容与统计标识关联。</p><h2>联系我们</h2><p>隐私问题可通过<a href="${escapeHtml(config.contactUrl)}" rel="nofollow">本站反馈渠道</a>联系${escapeHtml(config.operatorName)}。请不要发送原始证件或私人照片。</p></article></section>`));
+await writePage("privacy/index.html", pageShell(privacy, "privacy", `<section class="page-head"><div class="page-head-inner"><p class="eyebrow">隐私政策</p><h1>图片由浏览器处理</h1><p>更新日期：${config.lastModified}。本政策描述当前发布版本的实际行为。</p></div></section><section class="section"><article class="article"><h2>本站处理哪些数据</h2><p>用户主动选择的图片、文件名、水印文字和输出参数由页面脚本在当前浏览器中读取。本站代码没有图片上传接口，不会主动把这些内容发送到本站或第三方服务器。</p><h2>浏览器临时状态</h2><p>处理时，浏览器内存会保存解码图片、Canvas 和 Blob 临时地址。页面刷新或关闭后通常会释放；浏览器的前进后退缓存可能在当前会话内短暂保留页面状态。下载后的文件由用户自行管理。</p><h2>托管与访问日志</h2><p>本站使用 GitHub Pages 托管。浏览器访问页面时会连接 GitHub 的基础设施，GitHub 可能处理 IP 地址、请求时间、浏览器信息和访问路径。具体处理方式和保留期限由<a href="https://docs.github.com/site-policy/privacy-policies/github-general-privacy-statement" rel="nofollow">GitHub 隐私声明</a>说明。本站会根据实际使用的服务和适用要求维护本政策，不把“图片没有上传”与“页面访问完全不产生网络数据”混为一谈。</p><h2>统计服务</h2><p>本站使用 Google Analytics 4 了解页面访问量、来源、设备类型和基础页面使用情况，以改进工具和内容。Google Analytics 可能向 Google 发送页面地址、来源页面、浏览器和设备信息、IP 地址衍生的粗略地理位置以及相关技术标识。本站不会主动把用户选择的图片、图片内容、文件名、EXIF 内容、GPS 坐标、水印文字或导出文件作为 Analytics 参数发送。</p><p>Google 对相关数据的处理受其隐私政策和服务条款约束。你可以通过浏览器隐私设置、内容拦截工具或 Google 提供的退出机制限制相关统计。若适用法律要求额外同意机制，本站将根据实际运营地区和访问者范围进行调整。</p><h2>Cookie、统计与推广链接</h2><p>本站在首页和工具页展示一条标明“推广”的虎跃加速网站链接。横幅由本站自己的 HTML 和 CSS 绘制，不加载对方图片、脚本或 iframe，也不会把你选择的图片、文件名、水印文字或处理结果发送给推广网站。只有在你主动点击后，浏览器才会打开外部网站；离开本站后的数据处理以对方网站的隐私说明为准。</p><p>Google Analytics 可能根据浏览器、地区和 Google 的当前实现使用 Cookie 或其他技术标识；本站不会利用统计数据建立用户画像，也不会把图片处理内容与统计标识关联。</p><h2>联系我们</h2><p>隐私问题可通过<a href="${escapeHtml(config.contactUrl)}" rel="nofollow">本站反馈渠道</a>联系${escapeHtml(config.operatorName)}。请不要发送原始证件或私人照片。</p></article></section>`));
 
 const terms = { kind: "page", path: "/terms/", title: `使用条款与免责声明 - ${config.siteName}`, description: `${config.siteName}的使用范围、用户责任、图片处理限制和服务可用性说明。` };
-await writePage("terms/index.html", pageShell(terms, "terms", `<section class="page-head"><div class="page-head-inner"><p class="eyebrow">使用条款</p><h1>先核对结果，再决定使用</h1><p>更新日期：${config.lastModified}。使用本站即表示理解以下功能边界。</p></div></section><section class="section"><article class="article"><h2>工具用途</h2><p>本站提供通用图片处理功能，结果由用户检查后自行决定是否使用。本站不保证输出一定满足报名平台、印刷、取证或特定合规要求。</p><h2>用户责任</h2><p>用户应确保有权处理所选择的图片，不得利用本站侵犯隐私、著作权或其他合法权益。处理证件和敏感资料时，应确认接收方身份、必要性和保存期限。</p><h2>安全边界</h2><p>可见水印不能阻止所有滥用；删除常见 EXIF 不代表完全匿名；图片放大不能恢复原本不存在的细节；重新编码也可能改变色彩配置、DPI 和元数据。</p><h2>服务可用性</h2><p>浏览器格式支持、设备内存和下载策略不同，处理可能失败。请保留原文件，下载后重新打开并检查。本站可能修复问题、调整限制或停止某项功能。</p><h2>禁止用途</h2><p>不得使用本站处理无权持有的敏感材料、规避平台审核、伪造证明或实施其他违法行为。</p><h2>联系</h2><p>条款或功能问题可通过<a href="${escapeHtml(config.contactUrl)}" rel="nofollow">反馈渠道</a>联系${escapeHtml(config.operatorName)}。</p></article></section>`));
+await writePage("terms/index.html", pageShell(terms, "terms", `<section class="page-head"><div class="page-head-inner"><p class="eyebrow">使用条款</p><h1>先核对结果，再决定使用</h1><p>更新日期：${config.lastModified}。使用本站即表示理解以下功能边界。</p></div></section><section class="section"><article class="article"><h2>工具用途</h2><p>本站提供通用图片处理功能，结果由用户检查后自行决定是否使用。本站不保证输出一定满足报名平台、印刷、取证或特定合规要求。</p><h2>用户责任</h2><p>用户应确保有权处理所选择的图片，不得利用本站侵犯隐私、著作权或其他合法权益。处理证件和敏感资料时，应确认接收方身份、必要性和保存期限。</p><h2>安全边界</h2><p>可见水印不能阻止所有滥用；删除常见 EXIF 不代表完全匿名；图片放大不能恢复原本不存在的细节；重新编码也可能改变色彩配置、DPI 和元数据。</p><h2>推广链接</h2><p>标有“推广”的横幅会打开第三方网站。该链接不代表本站对第三方服务的速度、可用性、价格或适用性作出保证；是否访问、下载或使用由用户自行判断，并应先查看对方的条款和隐私说明。</p><h2>服务可用性</h2><p>浏览器格式支持、设备内存和下载策略不同，处理可能失败。请保留原文件，下载后重新打开并检查。本站可能修复问题、调整限制或停止某项功能。</p><h2>禁止用途</h2><p>不得使用本站处理无权持有的敏感材料、规避平台审核、伪造证明或实施其他违法行为。</p><h2>联系</h2><p>条款或功能问题可通过<a href="${escapeHtml(config.contactUrl)}" rel="nofollow">反馈渠道</a>联系${escapeHtml(config.operatorName)}。</p></article></section>`));
 
 const notFound = { kind: "page", path: "/404.html", title: `页面不存在 - ${config.siteName}`, description: "请求的页面不存在。", noindex: true };
 await writePage("404.html", pageShell(notFound, "", `<section class="page-head"><div class="page-head-inner"><p class="eyebrow">404</p><h1>这个页面不存在</h1><p>地址可能输入有误，也可能已经调整。</p><div class="button-row"><a class="button" href="${asset("/")}">返回全部工具</a></div></div></section>`));

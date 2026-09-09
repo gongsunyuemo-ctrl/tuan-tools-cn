@@ -13,6 +13,9 @@ const basePath = new URL(config.siteUrl).pathname.replace(/\/$/, "");
 const htmlFiles = (await walk(root)).filter((file) => file.endsWith(".html") && !(root === sourceRoot && file.includes("/_site/")));
 const jsFiles = (await walk(resolve(root, "assets/js"))).filter((file) => file.endsWith(".js"));
 const failures = [];
+const publicPages = new Set(["index.html", "compress/index.html", "watermark/index.html", "resize/index.html", "convert/index.html", "remove-exif/index.html", "methodology/index.html", "about/index.html", "privacy/index.html", "terms/index.html"]);
+const promotionPages = new Set(["index.html", "compress/index.html", "watermark/index.html", "resize/index.html", "convert/index.html", "remove-exif/index.html"]);
+const uniqueFields = { title: new Map(), description: new Map(), canonical: new Map(), h1: new Map() };
 
 if (root === sourceRoot) {
   try {
@@ -39,14 +42,39 @@ for (const file of htmlFiles) {
   const html = await readFile(file, "utf8");
   const name = relative(root, file);
   const structuredItems = [];
-  if (!/<html lang="zh-CN">/.test(html)) failures.push(`${name}：缺少 zh-CN`);
-  if (!/<meta name="description"/.test(html)) failures.push(`${name}：缺少描述`);
-  if (name !== "404.html" && !/<link rel="canonical"/.test(html)) failures.push(`${name}：缺少 canonical`);
+  const isGoogleVerification = /^google[a-z0-9]+\.html$/.test(name);
+  if (isGoogleVerification) {
+    const expected = `google-site-verification: ${name}`;
+    if (html.trim() !== expected) failures.push(`${name}：Google 站点验证文件内容与文件名不匹配`);
+  } else {
+    if (!/<html lang="zh-CN">/.test(html)) failures.push(`${name}：缺少 zh-CN`);
+    if (!/<meta name="description"/.test(html)) failures.push(`${name}：缺少描述`);
+    if (name !== "404.html" && !/<link rel="canonical"/.test(html)) failures.push(`${name}：缺少 canonical`);
+  }
   if (/政策草案|默认假设|正式上线前|当前代码包|没有隐藏脚本|jingtu-tools/.test(html)) failures.push(`${name}：包含不应公开的占位或内部文案`);
   if (/upgrade-insecure-requests/.test(html)) failures.push(`${name}：不应在 HTML CSP 中强制升级本地 HTTP 预览`);
   const ids = Array.from(html.matchAll(/\sid="([^"]+)"/g), (match) => match[1]);
   const duplicates = ids.filter((id, index) => ids.indexOf(id) !== index);
   if (duplicates.length) failures.push(`${name}：存在重复 ID ${[...new Set(duplicates)].join(", ")}`);
+  if (publicPages.has(name)) {
+    const values = {
+      title: html.match(/<title>([^<]+)<\/title>/)?.[1],
+      description: html.match(/<meta name="description" content="([^"]+)"/)?.[1],
+      canonical: html.match(/<link rel="canonical" href="([^"]+)"/)?.[1],
+      h1: html.match(/<h1>([^<]+)<\/h1>/)?.[1]
+    };
+    for (const [field, value] of Object.entries(values)) {
+      if (!value) failures.push(`${name}：缺少可检查的 ${field}`);
+      else if (uniqueFields[field].has(value)) failures.push(`${name}：${field} 与 ${uniqueFields[field].get(value)} 重复`);
+      else uniqueFields[field].set(value, name);
+    }
+    const bannerCount = (html.match(/class="promotion-banner"/g) || []).length;
+    const expectedBannerCount = promotionPages.has(name) ? 1 : 0;
+    if (bannerCount !== expectedBannerCount) failures.push(`${name}：推广横幅数量应为 ${expectedBannerCount}，实际为 ${bannerCount}`);
+    if (promotionPages.has(name) && !/<a class="promotion-banner" href="https:\/\/huyuejsq\.co\/" target="_blank" rel="sponsored noopener noreferrer"/.test(html)) failures.push(`${name}：推广链接地址或安全属性不正确`);
+    if (/"@type":"FAQPage"/.test(html)) failures.push(`${name}：普通工具站不应保留无实际展示价值的 FAQPage 富结果标记`);
+    if (!html.includes("G-40JD4CQ5DT")) failures.push(`${name}：缺少当前 Google Analytics 衡量 ID`);
+  }
   for (const match of html.matchAll(/<script type="application\/ld\+json">([\s\S]*?)<\/script>/g)) {
     try { structuredItems.push(JSON.parse(match[1])); }
     catch (error) { failures.push(`${name}：JSON-LD 无法解析：${error.message}`); }
@@ -94,6 +122,10 @@ if ((css.match(/{/g) || []).length !== (css.match(/}/g) || []).length) failures.
 const integrationSource = (await Promise.all(jsFiles.map((file) => readFile(file, "utf8")))).join("\n");
 if (/\b(fetch|XMLHttpRequest|WebSocket|sendBeacon)\s*\(/.test(integrationSource)) failures.push("运行时代码出现网络发送 API");
 if (/\.innerHTML\s*=|\beval\s*\(/.test(integrationSource)) failures.push("运行时代码出现高风险 DOM 或 eval 写入");
+
+const readme = await readFile(resolve(sourceRoot, "README.md"), "utf8");
+const integrations = await readFile(resolve(sourceRoot, "INTEGRATIONS.md"), "utf8");
+if (/不加载统计和广告脚本|当前站点不加载统计或广告脚本/.test(readme + "\n" + integrations)) failures.push("维护文档与当前 GA4、静态推广横幅实现不一致");
 
 if (failures.length) {
   console.error(failures.map((item) => `- ${item}`).join("\n"));

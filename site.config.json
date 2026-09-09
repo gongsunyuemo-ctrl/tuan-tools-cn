@@ -6,18 +6,18 @@
   "contactUrl": "https://github.com/gongsunyuemo-ctrl/tuan-tools-cn/issues",
   "repositoryUrl": "https://github.com/gongsunyuemo-ctrl/tuan-tools-cn",
   "customDomain": "",
-  "lastModified": "2026-08-26",
+  "lastModified": "2026-09-10",
   "pageLastModified": {
-    "/": "2026-08-26",
-    "/compress/": "2026-08-26",
-    "/watermark/": "2026-08-26",
-    "/resize/": "2026-08-26",
-    "/convert/": "2026-08-26",
-    "/remove-exif/": "2026-08-26",
+    "/": "2026-09-10",
+    "/compress/": "2026-09-10",
+    "/watermark/": "2026-09-10",
+    "/resize/": "2026-09-10",
+    "/convert/": "2026-09-10",
+    "/remove-exif/": "2026-09-10",
     "/methodology/": "2026-08-26",
     "/about/": "2026-08-26",
-    "/privacy/": "2026-08-26",
-    "/terms/": "2026-08-26"
+    "/privacy/": "2026-09-10",
+    "/terms/": "2026-09-10"
   },
   "productionReady": true
 }

@@ -1,6 +1,6 @@
 # 图安工具
 
-一个面向中文用户的静态图片工具站，包含图片压缩、水印、尺寸修改、格式转换和 EXIF 查看与清除。运行时无第三方依赖，图片由浏览器本地处理。
+一个面向中文用户的静态图片工具站，包含图片压缩、水印、尺寸修改、格式转换和 EXIF 查看与清除。图片由浏览器本地处理，页面使用 Google Analytics 4 统计基础访问数据。
 
 ## 目录
 
@@ -78,9 +78,9 @@ GitHub Pages 适合首站验证，但官方不把它定位为免费托管在线�
 
 ## 运行时隐私
 
-当前页面不调用 `fetch`、XHR、WebSocket 或 `sendBeacon`，不加载统计和广告脚本。图片在浏览器内存、Canvas 和 Blob URL 中处理。
+工具运行时代码不调用 `fetch`、XHR、WebSocket 或 `sendBeacon`。图片在浏览器内存、Canvas 和 Blob URL 中处理。页面加载 Google Analytics 4，并在首页和五个工具页显示一个由本站 HTML/CSS 绘制的静态推广横幅；横幅不会加载落地页的脚本、图片或 iframe。
 
-不要把第三方统计或广告 JavaScript 直接加入工具页。外部脚本在当前页面上下文中运行，理论上可以读取文件名、预览图和 Canvas。详细隔离要求见 `INTEGRATIONS.md`。
+不要再把其他第三方统计或广告 JavaScript 直接加入工具页。外部脚本在当前页面上下文中运行，理论上可以读取文件名、预览图和 Canvas。详细隔离要求见 `INTEGRATIONS.md`。
 
 工具页在 iframe 中会禁用操作，但这只是运行时补充保护。正式域名应通过 CDN 或可配置响应头的托管服务发送 `Content-Security-Policy: frame-ancestors 'none'`；HTML `<meta>` 不能提供这项保护。使用纯 GitHub Pages 时，应上线后实际检查响应头，并在需要严格防嵌入时把自定义域名接入能够设置安全响应头的 CDN。
 

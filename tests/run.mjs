@@ -188,4 +188,20 @@ await writeFile(resolve(configDirectory, "site.config.json"), JSON.stringify(con
 assert((await loadConfig(configDirectory, true)).productionReady === true, "布尔值 true 应通过完整生产配置校验");
 await rm(configDirectory, { recursive: true, force: true });
 
+const promotionPages = ["index.html", "compress/index.html", "watermark/index.html", "resize/index.html", "convert/index.html", "remove-exif/index.html"];
+for (const page of promotionPages) {
+  const html = await readFile(resolve(root, page), "utf8");
+  assert((html.match(/class="promotion-banner"/g) || []).length === 1, `${page} 应且只应有一个推广横幅`);
+  assert(html.includes('href="https://huyuejsq.co/" target="_blank" rel="sponsored noopener noreferrer"'), `${page} 推广链接应具有正确落地页和安全属性`);
+}
+const policyPages = ["methodology/index.html", "about/index.html", "privacy/index.html", "terms/index.html", "404.html"];
+for (const page of policyPages) {
+  const html = await readFile(resolve(root, page), "utf8");
+  assert(!html.includes('class="promotion-banner"'), `${page} 不应插入推广横幅`);
+}
+const privacyHtml = await readFile(resolve(root, "privacy/index.html"), "utf8");
+assert(privacyHtml.includes("横幅由本站自己的 HTML 和 CSS 绘制"), "隐私政策应准确披露静态推广横幅的数据边界");
+const toolHtml = await readFile(resolve(root, "compress/index.html"), "utf8");
+assert(!toolHtml.includes('"@type":"FAQPage"'), "普通工具页不应保留无实际展示价值的 FAQPage 富结果标记");
+
 console.log(`逻辑测试通过：${passed} 项断言。`);
