@@ -1,0 +1,53 @@
+{
+  "name": "图安工具",
+  "short_name": "图安",
+  "description": "浏览器本地按上传要求处理图片，并提供检查、单张与批量压缩、水印、尺寸、格式转换、EXIF 查看与批量元数据清理工具。",
+  "lang": "zh-CN",
+  "id": "/tuan-tools-cn/",
+  "start_url": "/tuan-tools-cn/",
+  "scope": "/tuan-tools-cn/",
+  "display": "standalone",
+  "background_color": "#f7f5ef",
+  "theme_color": "#f7f5ef",
+  "shortcuts": [
+    {
+      "name": "按上传要求处理",
+      "short_name": "按要求处理",
+      "url": "/tuan-tools-cn/photo-requirements/"
+    },
+    {
+      "name": "检查图片",
+      "short_name": "检查",
+      "url": "/tuan-tools-cn/inspect/"
+    },
+    {
+      "name": "压缩到指定 KB",
+      "short_name": "压缩",
+      "url": "/tuan-tools-cn/compress/"
+    },
+    {
+      "name": "批量压缩",
+      "short_name": "批量压缩",
+      "url": "/tuan-tools-cn/batch-compress/"
+    },
+    {
+      "name": "EXIF 查看与清除",
+      "short_name": "清 EXIF",
+      "url": "/tuan-tools-cn/remove-exif/"
+    }
+  ],
+  "icons": [
+    {
+      "src": "/tuan-tools-cn/assets/img/icon-192.png",
+      "sizes": "192x192",
+      "type": "image/png",
+      "purpose": "any"
+    },
+    {
+      "src": "/tuan-tools-cn/assets/img/icon-512.png",
+      "sizes": "512x512",
+      "type": "image/png",
+      "purpose": "any"
+    }
+  ]
+}

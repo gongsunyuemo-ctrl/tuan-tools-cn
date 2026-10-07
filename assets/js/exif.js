@@ -36,6 +36,7 @@
 
   document.querySelector("#download").addEventListener("click", function () {
     if (outputBlob) {
+      window.TuanAnalytics?.track("tool_download", "remove-exif");
       C.downloadBlob(
         outputBlob,
         C.baseName(sourceFile.name) +
@@ -104,6 +105,7 @@
 
       loaded = next;
       sourceFile = file;
+      window.TuanAnalytics?.track("tool_file_selected", "remove-exif");
 
       clearResult();
 
@@ -133,11 +135,13 @@
       document.querySelector("#reset").hidden = false;
       document.querySelector("#metadata").hidden = false;
 
-      const message = metadata.damaged
-        ? "检测到照片信息，但部分内容损坏或不完整，可能无法完整显示。仍可以生成清理后的新图片。"
-        : metadata.rows.length
-          ? "已读取可识别的照片信息。GPS 坐标默认隐藏。"
-          : "未发现可识别的常见照片信息，仍可以生成新的图片副本。";
+      const message = loaded.type !== "image/jpeg"
+        ? "当前查看器只解析 JPEG 的常见 EXIF 字段；PNG/WebP 可能仍包含其他元数据。仍可以通过重新编码生成新的图片副本。"
+        : metadata.damaged
+          ? "检测到 JPEG EXIF，但部分内容损坏或不完整，可能无法完整显示。仍可以生成清理后的新图片。"
+          : metadata.rows.length
+            ? "已读取可识别的 JPEG EXIF 信息。GPS 坐标默认隐藏。"
+            : "未检测到可识别的 JPEG EXIF 字段，仍可以生成新的图片副本。";
 
       C.setStatus(
         status,
@@ -216,6 +220,14 @@
   }
 
   function renderMeta(metadata, file) {
+    const hasGps = metadata.rows.some(function (row) { return row.sensitive; });
+    const exifState = loaded.type !== "image/jpeg"
+      ? "当前格式未做完整 EXIF 解析"
+      : metadata.damaged
+        ? "检测到 EXIF，但结构不完整"
+        : metadata.foundExif
+          ? "检测到 JPEG EXIF"
+          : "未检测到 JPEG EXIF";
     const base = [
       {
         label: "文件名",
@@ -235,6 +247,18 @@
           loaded.width +
           " × " +
           loaded.height
+      },
+      {
+        label: "EXIF 检查状态",
+        value: exifState
+      },
+      {
+        label: "GPS 字段",
+        value: loaded.type !== "image/jpeg"
+          ? "当前格式未做完整 GPS 元数据解析"
+          : hasGps
+            ? "检测到可识别 GPS 坐标（默认隐藏）"
+            : "未检测到可识别 GPS 坐标"
       }
     ];
 
@@ -1108,6 +1132,7 @@
     }
 
     const token = gate.start();
+    window.TuanAnalytics?.track("tool_run", "remove-exif");
 
     const controls = [
       format,
@@ -1235,6 +1260,7 @@
           : "已生成新文件：未复制原照片的常见元数据";
 
       C.focusResult(result);
+      window.TuanAnalytics?.track("tool_success", "remove-exif");
 
       C.setStatus(
         status,

@@ -263,6 +263,115 @@
     window.setTimeout(function () { URL.revokeObjectURL(url); }, 60_000);
   }
 
+  async function detectTransparency(loaded) {
+    if (!loaded || loaded.type === "image/jpeg") return false;
+    const sourceWidth = loaded.width;
+    const sourceHeight = loaded.height;
+    const scale = Math.min(1, 256 / Math.max(sourceWidth, sourceHeight));
+    const width = Math.max(1, Math.round(sourceWidth * scale));
+    const height = Math.max(1, Math.round(sourceHeight * scale));
+    const made = makeCanvas(width, height, true);
+    made.ctx.clearRect(0, 0, width, height);
+    made.ctx.drawImage(loaded.img, 0, 0, width, height);
+    const data = made.ctx.getImageData(0, 0, width, height).data;
+    for (let i = 3; i < data.length; i += 4) {
+      if (data[i] < 255) return true;
+    }
+    return false;
+  }
+
+  const crcTable = (function () {
+    const table = new Uint32Array(256);
+    for (let n = 0; n < 256; n += 1) {
+      let c = n;
+      for (let k = 0; k < 8; k += 1) c = (c & 1) ? (0xedb88320 ^ (c >>> 1)) : (c >>> 1);
+      table[n] = c >>> 0;
+    }
+    return table;
+  })();
+
+  function crc32(bytes) {
+    let crc = 0xffffffff;
+    for (let i = 0; i < bytes.length; i += 1) crc = crcTable[(crc ^ bytes[i]) & 0xff] ^ (crc >>> 8);
+    return (crc ^ 0xffffffff) >>> 0;
+  }
+
+  function dosDateTime(date) {
+    const d = date instanceof Date ? date : new Date();
+    const year = Math.max(1980, d.getFullYear());
+    return {
+      time: (d.getHours() << 11) | (d.getMinutes() << 5) | Math.floor(d.getSeconds() / 2),
+      date: ((year - 1980) << 9) | ((d.getMonth() + 1) << 5) | d.getDate()
+    };
+  }
+
+  async function createZip(entries) {
+    if (!Array.isArray(entries) || !entries.length) throw new Error("没有可打包的文件。");
+    const encoder = new TextEncoder();
+    const localParts = [];
+    const centralParts = [];
+    let offset = 0;
+    const stamp = dosDateTime(new Date());
+
+    for (const entry of entries) {
+      const nameBytes = encoder.encode(String(entry.name || "file.bin"));
+      const data = new Uint8Array(await entry.blob.arrayBuffer());
+      const crc = crc32(data);
+      const local = new Uint8Array(30 + nameBytes.length);
+      const lv = new DataView(local.buffer);
+      lv.setUint32(0, 0x04034b50, true);
+      lv.setUint16(4, 20, true);
+      lv.setUint16(6, 0x0800, true);
+      lv.setUint16(8, 0, true);
+      lv.setUint16(10, stamp.time, true);
+      lv.setUint16(12, stamp.date, true);
+      lv.setUint32(14, crc, true);
+      lv.setUint32(18, data.length, true);
+      lv.setUint32(22, data.length, true);
+      lv.setUint16(26, nameBytes.length, true);
+      lv.setUint16(28, 0, true);
+      local.set(nameBytes, 30);
+      localParts.push(local, data);
+
+      const central = new Uint8Array(46 + nameBytes.length);
+      const cv = new DataView(central.buffer);
+      cv.setUint32(0, 0x02014b50, true);
+      cv.setUint16(4, 20, true);
+      cv.setUint16(6, 20, true);
+      cv.setUint16(8, 0x0800, true);
+      cv.setUint16(10, 0, true);
+      cv.setUint16(12, stamp.time, true);
+      cv.setUint16(14, stamp.date, true);
+      cv.setUint32(16, crc, true);
+      cv.setUint32(20, data.length, true);
+      cv.setUint32(24, data.length, true);
+      cv.setUint16(28, nameBytes.length, true);
+      cv.setUint16(30, 0, true);
+      cv.setUint16(32, 0, true);
+      cv.setUint16(34, 0, true);
+      cv.setUint16(36, 0, true);
+      cv.setUint32(38, 0, true);
+      cv.setUint32(42, offset, true);
+      central.set(nameBytes, 46);
+      centralParts.push(central);
+      offset += local.length + data.length;
+      await nextFrame();
+    }
+
+    const centralSize = centralParts.reduce(function (sum, part) { return sum + part.length; }, 0);
+    const end = new Uint8Array(22);
+    const ev = new DataView(end.buffer);
+    ev.setUint32(0, 0x06054b50, true);
+    ev.setUint16(4, 0, true);
+    ev.setUint16(6, 0, true);
+    ev.setUint16(8, entries.length, true);
+    ev.setUint16(10, entries.length, true);
+    ev.setUint32(12, centralSize, true);
+    ev.setUint32(16, offset, true);
+    ev.setUint16(20, 0, true);
+    return new Blob([...localParts, ...centralParts, end], { type: "application/zip" });
+  }
+
   function setStatus(node, message, tone) {
     node.hidden = false;
     node.textContent = message;
@@ -356,6 +465,8 @@
     drawImageFitted,
     replaceObjectUrl,
     downloadBlob,
+    detectTransparency,
+    createZip,
     setStatus,
     clearStatus,
     setBusy,

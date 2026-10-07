@@ -12,6 +12,7 @@
   const heightInput = document.querySelector("#height");
   const lockInput = document.querySelector("#lock-ratio");
   const modeInput = document.querySelector("#fit-mode");
+  const modeHint = document.querySelector("#fit-mode-hint");
   const formatInput = document.querySelector("#output-format");
   const backgroundInput = document.querySelector("#background");
   const transparentInput = document.querySelector("#transparent-background");
@@ -45,7 +46,6 @@
 
   [
     lockInput,
-    modeInput,
     formatInput,
     backgroundInput,
     transparentInput,
@@ -54,6 +54,11 @@
     quality
   ].forEach(function (node) {
     node.addEventListener("input", invalidate);
+  });
+
+  modeInput.addEventListener("input", function () {
+    syncModeHint();
+    invalidate();
   });
 
   document.querySelectorAll("[data-preset]").forEach(function (button) {
@@ -77,6 +82,7 @@
 
     const target = dimensions();
 
+    window.TuanAnalytics?.track("tool_download", "resize");
     C.downloadBlob(
       outputBlob,
       C.baseName(sourceFile.name) +
@@ -100,6 +106,7 @@
   window.addEventListener("pageshow", syncControls);
 
   syncControls();
+  syncModeHint();
 
   async function selectFile(file) {
     const token = gate.start();
@@ -156,6 +163,7 @@
 
       loaded = next;
       sourceFile = file;
+      window.TuanAnalytics?.track("tool_file_selected", "resize");
 
       ratio =
         loaded.width /
@@ -295,6 +303,18 @@
       width,
       height
     };
+  }
+
+  function syncModeHint() {
+    if (!modeHint) return;
+
+    const hints = {
+      contain: "保留完整画面；比例不同时会留边。",
+      cover: "填满目标尺寸；比例不同时会裁掉边缘，可调整焦点。",
+      stretch: "不裁剪也不留边，但可能把人物或物体拉伸变形。"
+    };
+
+    modeHint.textContent = hints[modeInput.value] || "";
   }
 
   function syncControls() {
@@ -507,6 +527,7 @@
     }
 
     const token = gate.start();
+    window.TuanAnalytics?.track("tool_run", "resize");
 
     const controls = [
       widthInput,
@@ -611,6 +632,7 @@
         target.height;
 
       C.focusResult(result);
+      window.TuanAnalytics?.track("tool_success", "resize");
 
       C.setStatus(
         status,

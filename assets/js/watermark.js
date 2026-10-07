@@ -15,6 +15,10 @@
   const colorInput = document.querySelector("#color");
   const repeatInput = document.querySelector("#repeat");
   const formatInput = document.querySelector("#output-format");
+  const recipientInput = document.querySelector("#template-recipient");
+  const purposeInput = document.querySelector("#template-purpose");
+  const dateInput = document.querySelector("#template-date");
+  const buildButton = document.querySelector("#build-watermark");
   const runButton = document.querySelector("#run");
   const result = document.querySelector("#result");
   const resultPreview = document.querySelector("#result-preview");
@@ -28,6 +32,33 @@
   let layoutValid = true;
 
   C.wireDropzone(zone, input, selectFile);
+
+  if (dateInput) {
+    const today = new Date();
+    const localDate = new Date(today.getTime() - today.getTimezoneOffset() * 60000)
+      .toISOString()
+      .slice(0, 10);
+    dateInput.value = localDate;
+  }
+
+  if (buildButton) {
+    buildButton.addEventListener("click", function () {
+      const recipient = recipientInput.value.trim();
+      const purpose = purposeInput.value.trim();
+      const date = dateInput.value.trim();
+      const parts = [];
+
+      if (recipient) parts.push("仅供" + recipient);
+      else parts.push("仅供资料");
+
+      if (purpose) parts.push(purpose + "使用");
+      if (date) parts.push(date);
+
+      textInput.value = parts.join("｜");
+      textInput.dispatchEvent(new Event("input", { bubbles: true }));
+      textInput.focus();
+    });
+  }
 
   [
     textInput,
@@ -52,6 +83,7 @@
   document.querySelector("#download").addEventListener("click", function () {
     if (!outputBlob) return;
 
+    window.TuanAnalytics?.track("tool_download", "watermark");
     C.downloadBlob(
       outputBlob,
       C.baseName(sourceFile.name) +
@@ -118,6 +150,7 @@
 
       loaded = next;
       sourceFile = file;
+      window.TuanAnalytics?.track("tool_file_selected", "watermark");
 
       clearResult();
 
@@ -666,6 +699,7 @@
     }
 
     const token = gate.start();
+    window.TuanAnalytics?.track("tool_run", "watermark");
 
     const controls = [
       textInput,
@@ -764,6 +798,7 @@
         loaded.height;
 
       C.focusResult(result);
+      window.TuanAnalytics?.track("tool_success", "watermark");
 
       C.setStatus(
         status,

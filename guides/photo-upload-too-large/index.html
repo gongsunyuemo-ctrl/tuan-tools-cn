@@ -1,0 +1,73 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="theme-color" content="#f7f5ef">
+  <meta name="color-scheme" content="light">
+  <meta name="application-name" content="图安工具">
+  <meta name="mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-title" content="图安">
+  <meta http-equiv="Content-Security-Policy" content="default-src &#39;self&#39;; img-src &#39;self&#39; blob: data: https://www.google-analytics.com https://*.google-analytics.com; script-src &#39;self&#39; https://www.googletagmanager.com &#39;sha256-3qmM4oe2wyQtf6JeAIuFO/zr8kh71CYCs3yX5wKis4A=&#39; &#39;sha256-VDjqlcnd17/Gg9LabggG0kMPhw6JAzb/3RyHtMKtaIY=&#39; &#39;sha256-BV6Zr1Tkn5uqo7n6mFlZw5YG6FFa8hy3i87mzvm1URM=&#39; &#39;sha256-mG14oRRnQutcRvVNbScVWGeArR8LJ7uzVOBFeTjf19g=&#39; &#39;sha256-raBhssJ6dcdj2GOJsGZkKWItGurJlgEOhKna42CqK5c=&#39;; style-src &#39;self&#39;; connect-src &#39;self&#39; https://www.google-analytics.com https://*.google-analytics.com https://*.analytics.google.com; object-src &#39;none&#39;; base-uri &#39;none&#39;; form-action &#39;none&#39;; frame-src &#39;none&#39;">
+  <meta name="referrer" content="no-referrer">
+  <meta name="robots" content="index,follow,max-image-preview:large">
+  <title>照片上传提示文件过大怎么办？图片压缩与尺寸处理顺序 - 图安工具</title>
+  <meta name="description" content="照片或报名图片上传提示文件过大时，判断是KB超限、像素不符还是格式不支持，并按正确顺序处理。">
+  <meta name="author" content="图安工具维护团队">
+  <link rel="canonical" href="https://gongsunyuemo-ctrl.github.io/tuan-tools-cn/guides/photo-upload-too-large/">
+  <link rel="icon" href="/tuan-tools-cn/assets/img/favicon.png?v=5067a29a4a55" sizes="32x32">
+  <link rel="apple-touch-icon" href="/tuan-tools-cn/assets/img/apple-touch-icon.png?v=5067a29a4a55">
+  <link rel="manifest" href="/tuan-tools-cn/manifest.webmanifest">
+  <meta property="og:type" content="article">
+  <meta property="og:locale" content="zh_CN">
+  <meta property="og:site_name" content="图安工具">
+  <meta property="og:title" content="照片上传提示文件过大怎么办？图片压缩与尺寸处理顺序 - 图安工具">
+  <meta property="og:description" content="照片或报名图片上传提示文件过大时，判断是KB超限、像素不符还是格式不支持，并按正确顺序处理。">
+  <meta property="og:url" content="https://gongsunyuemo-ctrl.github.io/tuan-tools-cn/guides/photo-upload-too-large/">
+  <meta property="article:published_time" content="2026-10-06T00:00:00+08:00">
+  <meta property="article:modified_time" content="2026-10-06T00:00:00+08:00">
+  <meta property="og:image" content="https://gongsunyuemo-ctrl.github.io/tuan-tools-cn/assets/img/hero-workbench.webp?v=5067a29a4a55">
+  <meta property="og:image:width" content="1672">
+  <meta property="og:image:height" content="941">
+  <meta property="og:image:alt" content="桌面上的手机、照片、色卡和裁切尺">
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="twitter:title" content="照片上传提示文件过大怎么办？图片压缩与尺寸处理顺序 - 图安工具">
+  <meta name="twitter:description" content="照片或报名图片上传提示文件过大时，判断是KB超限、像素不符还是格式不支持，并按正确顺序处理。">
+  <meta name="twitter:image" content="https://gongsunyuemo-ctrl.github.io/tuan-tools-cn/assets/img/hero-workbench.webp?v=5067a29a4a55">
+  <meta name="twitter:image:alt" content="桌面上的手机、照片、色卡和裁切尺">
+  <link rel="stylesheet" href="/tuan-tools-cn/assets/css/styles.css?v=5067a29a4a55">
+  <script async src="https://www.googletagmanager.com/gtag/js?id=G-40JD4CQ5DT"></script>
+  <script>window.dataLayer = window.dataLayer || [];
+function gtag(){dataLayer.push(arguments);}
+gtag('js', new Date());
+gtag('config', 'G-40JD4CQ5DT', { anonymize_ip: true });</script>
+  <script type="application/ld+json">{"@context":"https://schema.org","@type":"Organization","@id":"https://gongsunyuemo-ctrl.github.io/tuan-tools-cn/#organization","name":"图安工具","url":"https://gongsunyuemo-ctrl.github.io/tuan-tools-cn/","sameAs":["https://github.com/gongsunyuemo-ctrl/tuan-tools-cn"],"foundingDate":"2026-08-24"}</script>
+  <script type="application/ld+json">{"@context":"https://schema.org","@type":"WebSite","@id":"https://gongsunyuemo-ctrl.github.io/tuan-tools-cn/#website","name":"图安工具","url":"https://gongsunyuemo-ctrl.github.io/tuan-tools-cn/","inLanguage":"zh-CN","publisher":{"@id":"https://gongsunyuemo-ctrl.github.io/tuan-tools-cn/#organization"}}</script>
+  <script type="application/ld+json">{"@context":"https://schema.org","@type":"Article","headline":"照片上传提示“文件过大”怎么办？","description":"照片或报名图片上传提示文件过大时，判断是KB超限、像素不符还是格式不支持，并按正确顺序处理。","mainEntityOfPage":"https://gongsunyuemo-ctrl.github.io/tuan-tools-cn/guides/photo-upload-too-large/","inLanguage":"zh-CN","datePublished":"2026-10-06","dateModified":"2026-10-06","isPartOf":{"@id":"https://gongsunyuemo-ctrl.github.io/tuan-tools-cn/#website"},"author":{"@type":"Organization","@id":"https://gongsunyuemo-ctrl.github.io/tuan-tools-cn/#organization","name":"图安工具","url":"https://gongsunyuemo-ctrl.github.io/tuan-tools-cn/about/"},"publisher":{"@id":"https://gongsunyuemo-ctrl.github.io/tuan-tools-cn/#organization"}}</script>
+  <script type="application/ld+json">{"@context":"https://schema.org","@type":"BreadcrumbList","itemListElement":[{"@type":"ListItem","position":1,"name":"全部工具","item":"https://gongsunyuemo-ctrl.github.io/tuan-tools-cn/"},{"@type":"ListItem","position":2,"name":"使用指南","item":"https://gongsunyuemo-ctrl.github.io/tuan-tools-cn/guides/"},{"@type":"ListItem","position":3,"name":"照片上传提示“文件过大”怎么办？","item":"https://gongsunyuemo-ctrl.github.io/tuan-tools-cn/guides/photo-upload-too-large/"}]}</script>
+</head>
+<body>
+<a class="skip-link" href="#main">跳到主要内容</a>
+<header class="site-header">
+  <nav class="nav-shell" aria-label="主导航">
+    <a class="brand" href="/tuan-tools-cn/"><span class="brand-mark" aria-hidden="true">图</span>图安工具</a>
+    <button class="menu-button" type="button" aria-label="打开导航" aria-expanded="false" aria-controls="site-navigation"><span class="menu-lines" aria-hidden="true"></span></button>
+    <div class="nav-links" id="site-navigation"><a href="/tuan-tools-cn/">全部工具</a><a href="/tuan-tools-cn/guides/">使用指南</a><a href="/tuan-tools-cn/methodology/">安全与隐私</a><a href="/tuan-tools-cn/about/">关于</a></div>
+  </nav>
+</header>
+<div class="offline-notice" data-offline-notice role="status" aria-live="polite" hidden>当前处于离线模式：已缓存的核心工具仍可打开，页面访问统计和外部链接可能不可用。</div>
+
+<main id="main" tabindex="-1">
+<section class="page-head"><div class="page-head-inner"><nav class="breadcrumbs" aria-label="面包屑"><a href="/tuan-tools-cn/">全部工具</a> / <a href="/tuan-tools-cn/guides/">使用指南</a> / <span aria-current="page">照片上传文件过大</span></nav><p class="eyebrow">上传排错</p><h1>照片上传提示“文件过大”怎么办？</h1><p>先看报错到底限制了文件大小、像素还是格式。三种限制看起来很像，但处理方法不同。</p><p class="article-meta">发布于 <time datetime="2026-10-06">2026-10-06</time></p></div></section><section class="section"><article class="article"><h2>只提示“文件不能超过 100KB / 200KB”</h2><p>这种情况优先处理文件体积，不必先随意修改像素。打开<a href="/tuan-tools-cn/compress/">图片压缩工具</a>，输入平台给出的 KB 上限，导出后再确认文字、人脸和二维码仍然清楚。如果多张图片都要满足同一个上限，可改用<a href="/tuan-tools-cn/batch-compress/">批量图片压缩</a>，统一参数后逐项检查结果。</p><h2>同时要求固定宽高和文件大小</h2><p>先改尺寸，再压 KB。例如页面同时要求 300×400 像素、不超过 200 KB，先把图片裁剪或留边到 300×400，再压缩到 200 KB 以内。反过来操作，尺寸修改时还会再次编码，可能让文件大小重新变化。</p><h2>提示“尺寸过大”不是同一件事</h2><p>“尺寸过大”通常指像素宽高，例如照片是 4000×3000，而平台只接受较小尺寸。这时应该用<a href="/tuan-tools-cn/resize/">尺寸修改工具</a>。如果报错写的是“文件过大”“超过 2 MB”，才主要看 KB/MB。</p><h2>平台不接受 WebP、PNG 或 JPG</h2><p>如果文件大小和尺寸都符合，但上传仍提示格式不支持，检查文件扩展名和平台允许的格式。需要转换时可用<a href="/tuan-tools-cn/convert/">JPG/PNG/WebP 格式转换</a>。注意：格式转换不等于压缩，转成另一种格式后文件可能变大也可能变小。</p><h2>为什么压到目标大小后看起来变糊</h2><p>如果原图非常大，而目标文件又很小，编码器只能通过降低画质或减少像素来换取体积。对于证件、报名材料和带文字的截图，先把像素调整到平台真正需要的尺寸，通常比把一张超大原图直接压到几十 KB 更容易保住可读性。</p><h2>上传前最后检查</h2><ul><li>文件大小是否不超过平台上限。</li><li>像素宽高和比例是否符合要求。</li><li>格式是否是平台允许的 JPG、PNG 或其他格式。</li><li>人脸、文字、二维码和证件边缘是否清楚完整。</li></ul><div class="article-actions"><button class="button secondary" type="button" data-share-page>分享本文</button><a class="home-text-link" href="/tuan-tools-cn/guides/">返回使用指南</a></div></article></section>
+</main>
+<footer class="site-footer">
+  <div class="footer-inner">
+    <span>© <span data-year></span> 图安工具</span>
+    <div class="footer-groups"><div class="footer-links"><a href="/tuan-tools-cn/guides/">使用指南</a><a href="/tuan-tools-cn/methodology/">安全与隐私</a><a href="/tuan-tools-cn/about/">关于本站</a><a href="/tuan-tools-cn/privacy/">隐私政策</a><a href="/tuan-tools-cn/terms/">使用条款</a><button class="footer-install" type="button" data-install-app hidden>安装到设备</button></div></div>
+  </div>
+</footer>
+<script src="/tuan-tools-cn/assets/js/site.js?v=5067a29a4a55" defer></script>
+
+</body>
+</html>

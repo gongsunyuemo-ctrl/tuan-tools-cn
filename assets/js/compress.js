@@ -15,6 +15,11 @@
   const status = document.querySelector("#status");
   const result = document.querySelector("#result");
   const resultPreview = document.querySelector("#result-preview");
+  const compareOriginal = document.querySelector("#compare-original");
+  const compareOutput = document.querySelector("#compare-output");
+  const compareOutputWrap = document.querySelector("#compare-output-wrap");
+  const compareDivider = document.querySelector("#compare-divider");
+  const compareRange = document.querySelector("#compare-range");
   const gate = C.createTaskGate();
 
   let loaded = null;
@@ -25,8 +30,22 @@
 
   C.wireDropzone(zone, input, selectFile);
 
+  compareRange.addEventListener("input", function () {
+    const value = Math.max(0, Math.min(100, Number(compareRange.value) || 50));
+    compareOutputWrap.style.clipPath = "inset(0 " + (100 - value) + "% 0 0)";
+    compareDivider.style.left = value + "%";
+  });
+
   runButton.addEventListener("click", compress);
   resetButton.addEventListener("click", reset);
+
+  document.querySelectorAll("[data-target-kb]").forEach(function (button) {
+    button.addEventListener("click", function () {
+      targetInput.value = button.getAttribute("data-target-kb");
+      targetInput.dispatchEvent(new Event("input", { bubbles: true }));
+      targetInput.focus();
+    });
+  });
 
   [targetInput, formatInput, resizeInput].forEach(function (node) {
     node.addEventListener("input", function () {
@@ -41,6 +60,7 @@
   document.querySelector("#download").addEventListener("click", function () {
     if (!outputBlob) return;
 
+    window.TuanAnalytics?.track("tool_download", "compress");
     C.downloadBlob(
       outputBlob,
       C.baseName(sourceFile.name) +
@@ -92,6 +112,7 @@
 
       loaded = next;
       sourceFile = file;
+      window.TuanAnalytics?.track("tool_file_selected", "compress");
 
       clearResult();
 
@@ -132,6 +153,11 @@
     outputUrl = "";
 
     resultPreview.removeAttribute("src");
+    compareOutput.removeAttribute("src");
+    compareOriginal.removeAttribute("src");
+    compareRange.value = "50";
+    compareOutputWrap.style.clipPath = "inset(0 50% 0 0)";
+    compareDivider.style.left = "50%";
   }
 
   function reset() {
@@ -242,6 +268,7 @@
     ];
 
     const token = gate.start();
+    window.TuanAnalytics?.track("tool_run", "compress");
 
     clearResult();
 
@@ -374,10 +401,28 @@
         resultPreview
       );
 
+      compareOriginal.src = loaded.url;
+      compareOutput.src = outputUrl;
+      compareRange.value = "50";
+      compareOutputWrap.style.clipPath = "inset(0 50% 0 0)";
+      compareDivider.style.left = "50%";
+
       document.querySelector(
         "#original-size"
       ).textContent =
         C.formatBytes(sourceFile.size);
+
+      document.querySelector(
+        "#original-dimensions"
+      ).textContent =
+        loaded.width +
+        " × " +
+        loaded.height;
+
+      document.querySelector(
+        "#target-limit"
+      ).textContent =
+        targetKB + " KB";
 
       document.querySelector(
         "#output-size"
@@ -416,7 +461,13 @@
       const reached =
         blob.size <= targetBytes;
 
+      document.querySelector(
+        "#target-status"
+      ).textContent =
+        reached ? "已达到目标" : "仍高于目标";
+
       C.focusResult(result);
+      window.TuanAnalytics?.track("tool_success", "compress");
 
       if (reused) {
         C.setStatus(

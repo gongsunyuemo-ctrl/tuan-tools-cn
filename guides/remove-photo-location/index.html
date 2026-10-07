@@ -1,0 +1,73 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="theme-color" content="#f7f5ef">
+  <meta name="color-scheme" content="light">
+  <meta name="application-name" content="图安工具">
+  <meta name="mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-title" content="图安">
+  <meta http-equiv="Content-Security-Policy" content="default-src &#39;self&#39;; img-src &#39;self&#39; blob: data: https://www.google-analytics.com https://*.google-analytics.com; script-src &#39;self&#39; https://www.googletagmanager.com &#39;sha256-3qmM4oe2wyQtf6JeAIuFO/zr8kh71CYCs3yX5wKis4A=&#39; &#39;sha256-VDjqlcnd17/Gg9LabggG0kMPhw6JAzb/3RyHtMKtaIY=&#39; &#39;sha256-SC+Imej4zsjb0SleXOtRuYmLnqkTOimEs00lSI9Qhnc=&#39; &#39;sha256-K0YtpkrUhlbPCIvix+k6/P9yHJVl6OivoqmSRF8svlA=&#39; &#39;sha256-raBhssJ6dcdj2GOJsGZkKWItGurJlgEOhKna42CqK5c=&#39;; style-src &#39;self&#39;; connect-src &#39;self&#39; https://www.google-analytics.com https://*.google-analytics.com https://*.analytics.google.com; object-src &#39;none&#39;; base-uri &#39;none&#39;; form-action &#39;none&#39;; frame-src &#39;none&#39;">
+  <meta name="referrer" content="no-referrer">
+  <meta name="robots" content="index,follow,max-image-preview:large">
+  <title>照片定位信息怎么删除？EXIF与GPS检查方法 - 图安工具</title>
+  <meta name="description" content="解释照片EXIF和GPS定位信息从哪里来、为什么不是每张照片都有GPS，以及分享前如何检查并清除常见元数据。">
+  <meta name="author" content="图安工具维护团队">
+  <link rel="canonical" href="https://gongsunyuemo-ctrl.github.io/tuan-tools-cn/guides/remove-photo-location/">
+  <link rel="icon" href="/tuan-tools-cn/assets/img/favicon.png?v=5067a29a4a55" sizes="32x32">
+  <link rel="apple-touch-icon" href="/tuan-tools-cn/assets/img/apple-touch-icon.png?v=5067a29a4a55">
+  <link rel="manifest" href="/tuan-tools-cn/manifest.webmanifest">
+  <meta property="og:type" content="article">
+  <meta property="og:locale" content="zh_CN">
+  <meta property="og:site_name" content="图安工具">
+  <meta property="og:title" content="照片定位信息怎么删除？EXIF与GPS检查方法 - 图安工具">
+  <meta property="og:description" content="解释照片EXIF和GPS定位信息从哪里来、为什么不是每张照片都有GPS，以及分享前如何检查并清除常见元数据。">
+  <meta property="og:url" content="https://gongsunyuemo-ctrl.github.io/tuan-tools-cn/guides/remove-photo-location/">
+  <meta property="article:published_time" content="2026-10-06T00:00:00+08:00">
+  <meta property="article:modified_time" content="2026-10-06T00:00:00+08:00">
+  <meta property="og:image" content="https://gongsunyuemo-ctrl.github.io/tuan-tools-cn/assets/img/hero-workbench.webp?v=5067a29a4a55">
+  <meta property="og:image:width" content="1672">
+  <meta property="og:image:height" content="941">
+  <meta property="og:image:alt" content="桌面上的手机、照片、色卡和裁切尺">
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="twitter:title" content="照片定位信息怎么删除？EXIF与GPS检查方法 - 图安工具">
+  <meta name="twitter:description" content="解释照片EXIF和GPS定位信息从哪里来、为什么不是每张照片都有GPS，以及分享前如何检查并清除常见元数据。">
+  <meta name="twitter:image" content="https://gongsunyuemo-ctrl.github.io/tuan-tools-cn/assets/img/hero-workbench.webp?v=5067a29a4a55">
+  <meta name="twitter:image:alt" content="桌面上的手机、照片、色卡和裁切尺">
+  <link rel="stylesheet" href="/tuan-tools-cn/assets/css/styles.css?v=5067a29a4a55">
+  <script async src="https://www.googletagmanager.com/gtag/js?id=G-40JD4CQ5DT"></script>
+  <script>window.dataLayer = window.dataLayer || [];
+function gtag(){dataLayer.push(arguments);}
+gtag('js', new Date());
+gtag('config', 'G-40JD4CQ5DT', { anonymize_ip: true });</script>
+  <script type="application/ld+json">{"@context":"https://schema.org","@type":"Organization","@id":"https://gongsunyuemo-ctrl.github.io/tuan-tools-cn/#organization","name":"图安工具","url":"https://gongsunyuemo-ctrl.github.io/tuan-tools-cn/","sameAs":["https://github.com/gongsunyuemo-ctrl/tuan-tools-cn"],"foundingDate":"2026-08-24"}</script>
+  <script type="application/ld+json">{"@context":"https://schema.org","@type":"WebSite","@id":"https://gongsunyuemo-ctrl.github.io/tuan-tools-cn/#website","name":"图安工具","url":"https://gongsunyuemo-ctrl.github.io/tuan-tools-cn/","inLanguage":"zh-CN","publisher":{"@id":"https://gongsunyuemo-ctrl.github.io/tuan-tools-cn/#organization"}}</script>
+  <script type="application/ld+json">{"@context":"https://schema.org","@type":"Article","headline":"照片定位信息怎么检查和清除？","description":"解释照片EXIF和GPS定位信息从哪里来、为什么不是每张照片都有GPS，以及分享前如何检查并清除常见元数据。","mainEntityOfPage":"https://gongsunyuemo-ctrl.github.io/tuan-tools-cn/guides/remove-photo-location/","inLanguage":"zh-CN","datePublished":"2026-10-06","dateModified":"2026-10-06","isPartOf":{"@id":"https://gongsunyuemo-ctrl.github.io/tuan-tools-cn/#website"},"author":{"@type":"Organization","@id":"https://gongsunyuemo-ctrl.github.io/tuan-tools-cn/#organization","name":"图安工具","url":"https://gongsunyuemo-ctrl.github.io/tuan-tools-cn/about/"},"publisher":{"@id":"https://gongsunyuemo-ctrl.github.io/tuan-tools-cn/#organization"}}</script>
+  <script type="application/ld+json">{"@context":"https://schema.org","@type":"BreadcrumbList","itemListElement":[{"@type":"ListItem","position":1,"name":"全部工具","item":"https://gongsunyuemo-ctrl.github.io/tuan-tools-cn/"},{"@type":"ListItem","position":2,"name":"使用指南","item":"https://gongsunyuemo-ctrl.github.io/tuan-tools-cn/guides/"},{"@type":"ListItem","position":3,"name":"照片定位信息怎么检查和清除？","item":"https://gongsunyuemo-ctrl.github.io/tuan-tools-cn/guides/remove-photo-location/"}]}</script>
+</head>
+<body>
+<a class="skip-link" href="#main">跳到主要内容</a>
+<header class="site-header">
+  <nav class="nav-shell" aria-label="主导航">
+    <a class="brand" href="/tuan-tools-cn/"><span class="brand-mark" aria-hidden="true">图</span>图安工具</a>
+    <button class="menu-button" type="button" aria-label="打开导航" aria-expanded="false" aria-controls="site-navigation"><span class="menu-lines" aria-hidden="true"></span></button>
+    <div class="nav-links" id="site-navigation"><a href="/tuan-tools-cn/">全部工具</a><a aria-current="page" href="/tuan-tools-cn/guides/">使用指南</a><a href="/tuan-tools-cn/methodology/">安全与隐私</a><a href="/tuan-tools-cn/about/">关于</a></div>
+  </nav>
+</header>
+<div class="offline-notice" data-offline-notice role="status" aria-live="polite" hidden>当前处于离线模式：已缓存的核心工具仍可打开，页面访问统计和外部链接可能不可用。</div>
+
+<main id="main" tabindex="-1">
+<section class="page-head"><div class="page-head-inner"><nav class="breadcrumbs" aria-label="面包屑"><a href="/tuan-tools-cn/">全部工具</a> / <a href="/tuan-tools-cn/guides/">使用指南</a> / <span aria-current="page">照片定位信息</span></nav><p class="eyebrow">照片隐私</p><h1>照片定位信息怎么检查和清除？</h1><p>照片可能在 EXIF 元数据里保存拍摄时间、设备信息，部分照片还可能包含 GPS 坐标。是否存在这些字段取决于设备、权限、相机设置和后续编辑过程。</p><p class="article-meta">发布于 <time datetime="2026-10-06">2026-10-06</time></p></div></section><section class="section"><article class="article"><h2>不是每张照片都有 GPS</h2><p>相机或手机只有在拍摄时获得定位权限、并把坐标写入照片时，才可能出现 GPS 字段。截图、经过部分社交平台处理的图片、关闭定位权限后拍摄的照片，都可能没有 GPS。</p><h2>EXIF 里常见的是什么</h2><table><thead><tr><th>字段类型</th><th>可能包含的信息</th><th>注意点</th></tr></thead><tbody><tr><td>拍摄时间</td><td>照片创建或拍摄时间</td><td>可能暴露活动时间</td></tr><tr><td>设备信息</td><td>相机/手机厂商、型号</td><td>可能暴露设备类型</td></tr><tr><td>GPS</td><td>经纬度等定位字段</td><td>可能暴露拍摄位置</td></tr><tr><td>方向</td><td>图片旋转方向</td><td>通常主要影响显示</td></tr></tbody></table><h2>分享前怎么处理</h2><ol><li>先检查照片是否确实存在需要清除的元数据。</li><li>生成去除常见 EXIF 的新副本，不覆盖唯一原图。</li><li>重新打开输出文件，确认画面和方向正常。</li><li>再检查画面本身是否包含门牌、地址、文件编号等可识别信息。</li></ol><p>本站的<a href="/tuan-tools-cn/remove-exif/">EXIF 查看与清除工具</a>会读取有限的常见 JPEG EXIF 标签，并通过重新编码生成新文件。多张图片只需要减少原始元数据传播时，可使用<a href="/tuan-tools-cn/batch-exif/">批量清除图片元数据</a>。这些工具都不是取证级元数据分析器。</p><h2>删除 EXIF 不等于匿名</h2><p>即使文件里不再有常见 EXIF，画面中的人脸、门牌、屏幕内容、文件编号、地标和环境细节仍可能暴露身份或地点。对于敏感资料，还应判断是否需要打码或减少分享范围。</p><div class="article-actions"><button class="button secondary" type="button" data-share-page>分享本文</button><a class="home-text-link" href="/tuan-tools-cn/guides/">返回使用指南</a></div></article></section>
+</main>
+<footer class="site-footer">
+  <div class="footer-inner">
+    <span>© <span data-year></span> 图安工具</span>
+    <div class="footer-groups"><div class="footer-links"><a href="/tuan-tools-cn/guides/">使用指南</a><a href="/tuan-tools-cn/methodology/">安全与隐私</a><a href="/tuan-tools-cn/about/">关于本站</a><a href="/tuan-tools-cn/privacy/">隐私政策</a><a href="/tuan-tools-cn/terms/">使用条款</a><button class="footer-install" type="button" data-install-app hidden>安装到设备</button></div></div>
+  </div>
+</footer>
+<script src="/tuan-tools-cn/assets/js/site.js?v=5067a29a4a55" defer></script>
+
+</body>
+</html>

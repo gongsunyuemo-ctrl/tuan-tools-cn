@@ -42,6 +42,7 @@
 
   document.querySelector("#download").addEventListener("click", function () {
     if (outputBlob) {
+      window.TuanAnalytics?.track("tool_download", "convert");
       C.downloadBlob(
         outputBlob,
         C.baseName(sourceFile.name) +
@@ -95,6 +96,7 @@
 
       loaded = next;
       sourceFile = file;
+      window.TuanAnalytics?.track("tool_file_selected", "convert");
 
       clearResult();
 
@@ -222,6 +224,7 @@
     }
 
     const token = gate.start();
+    window.TuanAnalytics?.track("tool_run", "convert");
 
     const controls = [
       format,
@@ -322,6 +325,7 @@
         loaded.height;
 
       C.focusResult(result);
+      window.TuanAnalytics?.track("tool_success", "convert");
 
       C.setStatus(
         status,

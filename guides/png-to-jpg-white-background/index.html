@@ -1,0 +1,73 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="theme-color" content="#f7f5ef">
+  <meta name="color-scheme" content="light">
+  <meta name="application-name" content="图安工具">
+  <meta name="mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-title" content="图安">
+  <meta http-equiv="Content-Security-Policy" content="default-src &#39;self&#39;; img-src &#39;self&#39; blob: data: https://www.google-analytics.com https://*.google-analytics.com; script-src &#39;self&#39; https://www.googletagmanager.com &#39;sha256-3qmM4oe2wyQtf6JeAIuFO/zr8kh71CYCs3yX5wKis4A=&#39; &#39;sha256-VDjqlcnd17/Gg9LabggG0kMPhw6JAzb/3RyHtMKtaIY=&#39; &#39;sha256-ATauBmweVpys7PGANALwlZ+lvZ8tARSg+oN1r90zTYc=&#39; &#39;sha256-RjRs4kKftidlZE6n5WSKF405zjcN5P7KmbYJEAcA0S8=&#39; &#39;sha256-raBhssJ6dcdj2GOJsGZkKWItGurJlgEOhKna42CqK5c=&#39;; style-src &#39;self&#39;; connect-src &#39;self&#39; https://www.google-analytics.com https://*.google-analytics.com https://*.analytics.google.com; object-src &#39;none&#39;; base-uri &#39;none&#39;; form-action &#39;none&#39;; frame-src &#39;none&#39;">
+  <meta name="referrer" content="no-referrer">
+  <meta name="robots" content="index,follow,max-image-preview:large">
+  <title>PNG转JPG为什么变白底？透明背景与JPG格式说明 - 图安工具</title>
+  <meta name="description" content="解释PNG透明背景转成JPG时为什么必须出现背景色，如何选择白底或其他背景，以及什么时候应继续使用PNG或WebP。">
+  <meta name="author" content="图安工具维护团队">
+  <link rel="canonical" href="https://gongsunyuemo-ctrl.github.io/tuan-tools-cn/guides/png-to-jpg-white-background/">
+  <link rel="icon" href="/tuan-tools-cn/assets/img/favicon.png?v=5067a29a4a55" sizes="32x32">
+  <link rel="apple-touch-icon" href="/tuan-tools-cn/assets/img/apple-touch-icon.png?v=5067a29a4a55">
+  <link rel="manifest" href="/tuan-tools-cn/manifest.webmanifest">
+  <meta property="og:type" content="article">
+  <meta property="og:locale" content="zh_CN">
+  <meta property="og:site_name" content="图安工具">
+  <meta property="og:title" content="PNG转JPG为什么变白底？透明背景与JPG格式说明 - 图安工具">
+  <meta property="og:description" content="解释PNG透明背景转成JPG时为什么必须出现背景色，如何选择白底或其他背景，以及什么时候应继续使用PNG或WebP。">
+  <meta property="og:url" content="https://gongsunyuemo-ctrl.github.io/tuan-tools-cn/guides/png-to-jpg-white-background/">
+  <meta property="article:published_time" content="2026-10-06T00:00:00+08:00">
+  <meta property="article:modified_time" content="2026-10-07T00:00:00+08:00">
+  <meta property="og:image" content="https://gongsunyuemo-ctrl.github.io/tuan-tools-cn/assets/img/hero-workbench.webp?v=5067a29a4a55">
+  <meta property="og:image:width" content="1672">
+  <meta property="og:image:height" content="941">
+  <meta property="og:image:alt" content="桌面上的手机、照片、色卡和裁切尺">
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="twitter:title" content="PNG转JPG为什么变白底？透明背景与JPG格式说明 - 图安工具">
+  <meta name="twitter:description" content="解释PNG透明背景转成JPG时为什么必须出现背景色，如何选择白底或其他背景，以及什么时候应继续使用PNG或WebP。">
+  <meta name="twitter:image" content="https://gongsunyuemo-ctrl.github.io/tuan-tools-cn/assets/img/hero-workbench.webp?v=5067a29a4a55">
+  <meta name="twitter:image:alt" content="桌面上的手机、照片、色卡和裁切尺">
+  <link rel="stylesheet" href="/tuan-tools-cn/assets/css/styles.css?v=5067a29a4a55">
+  <script async src="https://www.googletagmanager.com/gtag/js?id=G-40JD4CQ5DT"></script>
+  <script>window.dataLayer = window.dataLayer || [];
+function gtag(){dataLayer.push(arguments);}
+gtag('js', new Date());
+gtag('config', 'G-40JD4CQ5DT', { anonymize_ip: true });</script>
+  <script type="application/ld+json">{"@context":"https://schema.org","@type":"Organization","@id":"https://gongsunyuemo-ctrl.github.io/tuan-tools-cn/#organization","name":"图安工具","url":"https://gongsunyuemo-ctrl.github.io/tuan-tools-cn/","sameAs":["https://github.com/gongsunyuemo-ctrl/tuan-tools-cn"],"foundingDate":"2026-08-24"}</script>
+  <script type="application/ld+json">{"@context":"https://schema.org","@type":"WebSite","@id":"https://gongsunyuemo-ctrl.github.io/tuan-tools-cn/#website","name":"图安工具","url":"https://gongsunyuemo-ctrl.github.io/tuan-tools-cn/","inLanguage":"zh-CN","publisher":{"@id":"https://gongsunyuemo-ctrl.github.io/tuan-tools-cn/#organization"}}</script>
+  <script type="application/ld+json">{"@context":"https://schema.org","@type":"Article","headline":"PNG 透明背景转 JPG，为什么会变成白底？","description":"解释PNG透明背景转成JPG时为什么必须出现背景色，如何选择白底或其他背景，以及什么时候应继续使用PNG或WebP。","mainEntityOfPage":"https://gongsunyuemo-ctrl.github.io/tuan-tools-cn/guides/png-to-jpg-white-background/","inLanguage":"zh-CN","datePublished":"2026-10-06","dateModified":"2026-10-07","isPartOf":{"@id":"https://gongsunyuemo-ctrl.github.io/tuan-tools-cn/#website"},"author":{"@type":"Organization","@id":"https://gongsunyuemo-ctrl.github.io/tuan-tools-cn/#organization","name":"图安工具","url":"https://gongsunyuemo-ctrl.github.io/tuan-tools-cn/about/"},"publisher":{"@id":"https://gongsunyuemo-ctrl.github.io/tuan-tools-cn/#organization"}}</script>
+  <script type="application/ld+json">{"@context":"https://schema.org","@type":"BreadcrumbList","itemListElement":[{"@type":"ListItem","position":1,"name":"全部工具","item":"https://gongsunyuemo-ctrl.github.io/tuan-tools-cn/"},{"@type":"ListItem","position":2,"name":"使用指南","item":"https://gongsunyuemo-ctrl.github.io/tuan-tools-cn/guides/"},{"@type":"ListItem","position":3,"name":"PNG 透明背景转 JPG，为什么会变成白底？","item":"https://gongsunyuemo-ctrl.github.io/tuan-tools-cn/guides/png-to-jpg-white-background/"}]}</script>
+</head>
+<body>
+<a class="skip-link" href="#main">跳到主要内容</a>
+<header class="site-header">
+  <nav class="nav-shell" aria-label="主导航">
+    <a class="brand" href="/tuan-tools-cn/"><span class="brand-mark" aria-hidden="true">图</span>图安工具</a>
+    <button class="menu-button" type="button" aria-label="打开导航" aria-expanded="false" aria-controls="site-navigation"><span class="menu-lines" aria-hidden="true"></span></button>
+    <div class="nav-links" id="site-navigation"><a href="/tuan-tools-cn/">全部工具</a><a aria-current="page" href="/tuan-tools-cn/guides/">使用指南</a><a href="/tuan-tools-cn/methodology/">安全与隐私</a><a href="/tuan-tools-cn/about/">关于</a></div>
+  </nav>
+</header>
+<div class="offline-notice" data-offline-notice role="status" aria-live="polite" hidden>当前处于离线模式：已缓存的核心工具仍可打开，页面访问统计和外部链接可能不可用。</div>
+
+<main id="main" tabindex="-1">
+<section class="page-head"><div class="page-head-inner"><nav class="breadcrumbs" aria-label="面包屑"><a href="/tuan-tools-cn/">全部工具</a> / <a href="/tuan-tools-cn/guides/">使用指南</a> / <span aria-current="page">PNG 转 JPG</span></nav><p class="eyebrow">透明背景</p><h1>PNG 透明背景转 JPG，为什么会变成白底？</h1><p>原因不是“转换失败”，而是 JPG 本身没有透明通道。原本透明的像素在导出 JPG 前必须先与一个实际颜色合成。</p><p class="article-meta">发布于 <time datetime="2026-10-06">2026-10-06</time> · 更新于 <time datetime="2026-10-07">2026-10-07</time></p></div></section><section class="section"><article class="article"><h2>透明不是白色</h2><p>PNG 和 WebP 可以记录“这个像素是透明的”，JPG 只能记录实际颜色。因此透明 PNG 转 JPG 时，程序必须决定透明区域最终显示成白色、黑色或其他背景色。</p><h2>半透明边缘为什么最容易看出变化</h2><p>Logo、抠图人物和图标边缘常常不是“完全透明 / 完全不透明”两种状态，而是包含半透明抗锯齿像素。转成 JPG 时，这些像素会先与所选背景色混合，所以同一个透明 PNG 合成白底和深色底时，边缘观感可能不同。导出后应重点检查细线、头发和文字边缘。</p><h2>什么时候用白底</h2><p>报名照片、商品图或普通文档系统如果明确要求 JPG，白色通常是最安全的中性背景选择。但如果平台规定蓝底、红底或其他颜色，应按平台要求处理，不能默认白底。</p><h2>想保留透明，就不要转成 JPG</h2><p>图标、Logo、抠图素材等需要透明边缘时，继续使用 PNG，或在目标平台支持的情况下使用 WebP。把它们转成 JPG 后，透明信息无法保留。</p><h2>转换时还会发生什么</h2><p>浏览器重新编码可能不保留原始 EXIF、ICC、DPI、XMP 等元数据。格式转换主要解决兼容性问题，并不保证文件一定更小。</p><p>需要实际转换时，可以使用<a href="/tuan-tools-cn/convert/">JPG/PNG/WebP 格式转换工具</a>并选择透明区域的背景颜色。</p><div class="article-actions"><button class="button secondary" type="button" data-share-page>分享本文</button><a class="home-text-link" href="/tuan-tools-cn/guides/">返回使用指南</a></div></article></section>
+</main>
+<footer class="site-footer">
+  <div class="footer-inner">
+    <span>© <span data-year></span> 图安工具</span>
+    <div class="footer-groups"><div class="footer-links"><a href="/tuan-tools-cn/guides/">使用指南</a><a href="/tuan-tools-cn/methodology/">安全与隐私</a><a href="/tuan-tools-cn/about/">关于本站</a><a href="/tuan-tools-cn/privacy/">隐私政策</a><a href="/tuan-tools-cn/terms/">使用条款</a><button class="footer-install" type="button" data-install-app hidden>安装到设备</button></div></div>
+  </div>
+</footer>
+<script src="/tuan-tools-cn/assets/js/site.js?v=5067a29a4a55" defer></script>
+
+</body>
+</html>

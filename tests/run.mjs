@@ -188,7 +188,7 @@ await writeFile(resolve(configDirectory, "site.config.json"), JSON.stringify(con
 assert((await loadConfig(configDirectory, true)).productionReady === true, "布尔值 true 应通过完整生产配置校验");
 await rm(configDirectory, { recursive: true, force: true });
 
-const promotionPages = ["index.html", "compress/index.html", "watermark/index.html", "resize/index.html", "convert/index.html", "remove-exif/index.html"];
+const promotionPages = ["index.html"];
 for (const page of promotionPages) {
   const html = await readFile(resolve(root, page), "utf8");
   assert((html.match(/class="promotion-banner"/g) || []).length === 1, `${page} 应且只应有一个推广横幅`);

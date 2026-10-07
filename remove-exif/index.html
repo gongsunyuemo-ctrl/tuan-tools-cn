@@ -3,37 +3,47 @@
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
-  <meta http-equiv="Content-Security-Policy" content="default-src &#39;self&#39;; img-src &#39;self&#39; blob: data: https://www.google-analytics.com https://*.google-analytics.com; script-src &#39;self&#39; https://www.googletagmanager.com &#39;sha256-2uvUOu/1rdT+flPIjDaDoQ+CiCkOgsPY8uxvJFYblJk=&#39; &#39;sha256-hW1tItEWIQsHgub4RR5yd1zKMG63xd1M+awj+XCnPAk=&#39; &#39;sha256-raBhssJ6dcdj2GOJsGZkKWItGurJlgEOhKna42CqK5c=&#39;; style-src &#39;self&#39;; connect-src &#39;self&#39; https://www.google-analytics.com https://*.google-analytics.com https://*.analytics.google.com; object-src &#39;none&#39;; base-uri &#39;none&#39;; form-action &#39;none&#39;; frame-src &#39;none&#39;">
+  <meta name="theme-color" content="#f7f5ef">
+  <meta name="color-scheme" content="light">
+  <meta name="application-name" content="图安工具">
+  <meta name="mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-title" content="图安">
+  <meta http-equiv="Content-Security-Policy" content="default-src &#39;self&#39;; img-src &#39;self&#39; blob: data: https://www.google-analytics.com https://*.google-analytics.com; script-src &#39;self&#39; https://www.googletagmanager.com &#39;sha256-3qmM4oe2wyQtf6JeAIuFO/zr8kh71CYCs3yX5wKis4A=&#39; &#39;sha256-VDjqlcnd17/Gg9LabggG0kMPhw6JAzb/3RyHtMKtaIY=&#39; &#39;sha256-SwUtyzifqOmq93IZbE0LNcroyUyc7SsWSPO/TtlzZeI=&#39; &#39;sha256-hW1tItEWIQsHgub4RR5yd1zKMG63xd1M+awj+XCnPAk=&#39; &#39;sha256-raBhssJ6dcdj2GOJsGZkKWItGurJlgEOhKna42CqK5c=&#39;; style-src &#39;self&#39;; connect-src &#39;self&#39; https://www.google-analytics.com https://*.google-analytics.com https://*.analytics.google.com; object-src &#39;none&#39;; base-uri &#39;none&#39;; form-action &#39;none&#39;; frame-src &#39;none&#39;">
   <meta name="referrer" content="no-referrer">
   <meta name="robots" content="index,follow,max-image-preview:large">
   <title>清除EXIF - 在线删除照片定位与拍摄信息｜图安工具</title>
-  <meta name="description" content="在线查看并清除照片中的常见 EXIF 信息，包括拍摄设备、时间和可能存在的 GPS 元数据。图片在浏览器本地处理。">
+  <meta name="description" content="在线查看 JPEG 中可识别的常见 EXIF 字段，并通过重新编码清理 JPG、PNG、WebP 中不随像素重新导出的元数据。图片在浏览器本地处理。">
   <meta name="author" content="图安工具维护团队">
   <link rel="canonical" href="https://gongsunyuemo-ctrl.github.io/tuan-tools-cn/remove-exif/">
-  <link rel="icon" href="/tuan-tools-cn/assets/img/favicon.png?v=e67f5936c4b5" sizes="32x32">
-  <link rel="apple-touch-icon" href="/tuan-tools-cn/assets/img/apple-touch-icon.png?v=e67f5936c4b5">
+  <link rel="icon" href="/tuan-tools-cn/assets/img/favicon.png?v=5067a29a4a55" sizes="32x32">
+  <link rel="apple-touch-icon" href="/tuan-tools-cn/assets/img/apple-touch-icon.png?v=5067a29a4a55">
+  <link rel="manifest" href="/tuan-tools-cn/manifest.webmanifest">
   <meta property="og:type" content="website">
   <meta property="og:locale" content="zh_CN">
   <meta property="og:site_name" content="图安工具">
   <meta property="og:title" content="EXIF 查看与清除">
-  <meta property="og:description" content="在线查看并清除照片中的常见 EXIF 信息，包括拍摄设备、时间和可能存在的 GPS 元数据。图片在浏览器本地处理。">
+  <meta property="og:description" content="在线查看 JPEG 中可识别的常见 EXIF 字段，并通过重新编码清理 JPG、PNG、WebP 中不随像素重新导出的元数据。图片在浏览器本地处理。">
   <meta property="og:url" content="https://gongsunyuemo-ctrl.github.io/tuan-tools-cn/remove-exif/">
-  <meta property="og:image" content="https://gongsunyuemo-ctrl.github.io/tuan-tools-cn/assets/img/hero-workbench.webp?v=e67f5936c4b5">
+  
+  <meta property="og:image" content="https://gongsunyuemo-ctrl.github.io/tuan-tools-cn/assets/img/hero-workbench.webp?v=5067a29a4a55">
   <meta property="og:image:width" content="1672">
   <meta property="og:image:height" content="941">
   <meta property="og:image:alt" content="桌面上的手机、照片、色卡和裁切尺">
   <meta name="twitter:card" content="summary_large_image">
   <meta name="twitter:title" content="EXIF 查看与清除">
-  <meta name="twitter:description" content="在线查看并清除照片中的常见 EXIF 信息，包括拍摄设备、时间和可能存在的 GPS 元数据。图片在浏览器本地处理。">
-  <meta name="twitter:image" content="https://gongsunyuemo-ctrl.github.io/tuan-tools-cn/assets/img/hero-workbench.webp?v=e67f5936c4b5">
+  <meta name="twitter:description" content="在线查看 JPEG 中可识别的常见 EXIF 字段，并通过重新编码清理 JPG、PNG、WebP 中不随像素重新导出的元数据。图片在浏览器本地处理。">
+  <meta name="twitter:image" content="https://gongsunyuemo-ctrl.github.io/tuan-tools-cn/assets/img/hero-workbench.webp?v=5067a29a4a55">
   <meta name="twitter:image:alt" content="桌面上的手机、照片、色卡和裁切尺">
-  <link rel="stylesheet" href="/tuan-tools-cn/assets/css/styles.css?v=e67f5936c4b5">
+  <link rel="stylesheet" href="/tuan-tools-cn/assets/css/styles.css?v=5067a29a4a55">
   <script async src="https://www.googletagmanager.com/gtag/js?id=G-40JD4CQ5DT"></script>
   <script>window.dataLayer = window.dataLayer || [];
 function gtag(){dataLayer.push(arguments);}
 gtag('js', new Date());
 gtag('config', 'G-40JD4CQ5DT', { anonymize_ip: true });</script>
-  <script type="application/ld+json">{"@context":"https://schema.org","@type":"WebApplication","name":"EXIF 查看与清除","url":"https://gongsunyuemo-ctrl.github.io/tuan-tools-cn/remove-exif/","description":"在线查看并清除照片中的常见 EXIF 信息，包括拍摄设备、时间和可能存在的 GPS 元数据。图片在浏览器本地处理。","applicationCategory":"SecurityApplication","operatingSystem":"支持现代浏览器的桌面与移动设备","browserRequirements":"需要 JavaScript、Canvas、Blob 和本地文件读取能力","isAccessibleForFree":true,"offers":{"@type":"Offer","price":0,"priceCurrency":"CNY"},"author":{"@id":"https://gongsunyuemo-ctrl.github.io/tuan-tools-cn/#organization"},"publisher":{"@id":"https://gongsunyuemo-ctrl.github.io/tuan-tools-cn/#organization"},"dateModified":"2026-09-10"}</script>
+  <script type="application/ld+json">{"@context":"https://schema.org","@type":"Organization","@id":"https://gongsunyuemo-ctrl.github.io/tuan-tools-cn/#organization","name":"图安工具","url":"https://gongsunyuemo-ctrl.github.io/tuan-tools-cn/","sameAs":["https://github.com/gongsunyuemo-ctrl/tuan-tools-cn"],"foundingDate":"2026-08-24"}</script>
+  <script type="application/ld+json">{"@context":"https://schema.org","@type":"WebSite","@id":"https://gongsunyuemo-ctrl.github.io/tuan-tools-cn/#website","name":"图安工具","url":"https://gongsunyuemo-ctrl.github.io/tuan-tools-cn/","inLanguage":"zh-CN","publisher":{"@id":"https://gongsunyuemo-ctrl.github.io/tuan-tools-cn/#organization"}}</script>
+  <script type="application/ld+json">{"@context":"https://schema.org","@type":"WebApplication","name":"EXIF 查看与清除","url":"https://gongsunyuemo-ctrl.github.io/tuan-tools-cn/remove-exif/","description":"在线查看 JPEG 中可识别的常见 EXIF 字段，并通过重新编码清理 JPG、PNG、WebP 中不随像素重新导出的元数据。图片在浏览器本地处理。","applicationCategory":"SecurityApplication","operatingSystem":"支持现代浏览器的桌面与移动设备","browserRequirements":"需要 JavaScript、Canvas、Blob 和本地文件读取能力","isAccessibleForFree":true,"isPartOf":{"@id":"https://gongsunyuemo-ctrl.github.io/tuan-tools-cn/#website"},"offers":{"@type":"Offer","price":0,"priceCurrency":"CNY"},"author":{"@id":"https://gongsunyuemo-ctrl.github.io/tuan-tools-cn/#organization"},"publisher":{"@id":"https://gongsunyuemo-ctrl.github.io/tuan-tools-cn/#organization"},"dateModified":"2026-10-06"}</script>
   <script type="application/ld+json">{"@context":"https://schema.org","@type":"BreadcrumbList","itemListElement":[{"@type":"ListItem","position":1,"name":"全部工具","item":"https://gongsunyuemo-ctrl.github.io/tuan-tools-cn/"},{"@type":"ListItem","position":2,"name":"EXIF 查看与清除","item":"https://gongsunyuemo-ctrl.github.io/tuan-tools-cn/remove-exif/"}]}</script>
 </head>
 <body>
@@ -42,13 +52,15 @@ gtag('config', 'G-40JD4CQ5DT', { anonymize_ip: true });</script>
   <nav class="nav-shell" aria-label="主导航">
     <a class="brand" href="/tuan-tools-cn/"><span class="brand-mark" aria-hidden="true">图</span>图安工具</a>
     <button class="menu-button" type="button" aria-label="打开导航" aria-expanded="false" aria-controls="site-navigation"><span class="menu-lines" aria-hidden="true"></span></button>
-    <div class="nav-links" id="site-navigation"><a href="/tuan-tools-cn/">全部工具</a><a href="/tuan-tools-cn/methodology/">安全与隐私</a><a href="/tuan-tools-cn/about/">关于</a></div>
+    <div class="nav-links" id="site-navigation"><a href="/tuan-tools-cn/">全部工具</a><a href="/tuan-tools-cn/guides/">使用指南</a><a href="/tuan-tools-cn/methodology/">安全与隐私</a><a href="/tuan-tools-cn/about/">关于</a></div>
   </nav>
 </header>
+<div class="offline-notice" data-offline-notice role="status" aria-live="polite" hidden>当前处于离线模式：已缓存的核心工具仍可打开，页面访问统计和外部链接可能不可用。</div>
+<noscript><div class="noscript-note" role="note">这个工具需要 JavaScript 才能在浏览器本地处理图片。请启用 JavaScript 后重新打开页面；页面中的说明内容仍可正常阅读。</div></noscript>
 <main id="main" tabindex="-1">
 <section class="page-head"><div class="page-head-inner">
   <nav class="breadcrumbs" aria-label="面包屑"><a href="/tuan-tools-cn/">全部工具</a> / <span aria-current="page">清除 EXIF</span></nav>
-  <p class="eyebrow">照片隐私</p><h1>EXIF 查看与清除</h1><p>EXIF 是照片中常见的一类元数据，可包含拍摄设备、时间、曝光参数和可能存在的 GPS 信息。工具会先查看常见字段，再重新编码像素，生成不复制原 EXIF 的新文件。</p>
+  <p class="eyebrow">照片隐私</p><h1>EXIF 查看与清除</h1><p>EXIF 是照片中常见的一类元数据，可包含拍摄设备、时间、曝光参数和可能存在的 GPS 信息。当前查看器会解析 JPEG 中可识别的常见 EXIF 字段；清理时则通过重新编码像素生成不复制原元数据的新文件。</p>
 </div></section>
 <div class="workspace"><div class="tool-panel">
   <noscript><p class="notice">图片处理需要启用 JavaScript；下方使用说明仍可正常阅读。</p></noscript>
@@ -65,26 +77,17 @@ gtag('config', 'G-40JD4CQ5DT', { anonymize_ip: true });</script>
   <div class="result-row"><span class="result-label">结果检查</span><strong class="result-value" id="verification"></strong></div>
   <div class="result-actions"><button class="button" id="download" type="button">下载结果</button><button class="button secondary" id="open-result" type="button">打开结果</button></div>
 </section>
-  <article class="article"><h2>照片信息可能包括什么</h2><p>常见 EXIF 字段包括拍摄时间、相机或手机型号、镜头、方向、曝光参数和 GPS。精确坐标默认隐藏，只有主动点击后才显示。</p><h2>清除方法与验证</h2><p>工具把可见像素绘制到新画布，再由浏览器编码。JPG 输出会重新检查是否仍存在 EXIF APP1 段；PNG 和 WebP 输出说明为“没有复制原元数据”，不声称进行了完整取证级分析。</p><h2>清除 EXIF 不等于匿名</h2><p>画面中的人脸、门牌、文件编号和环境特征仍可能暴露身份。隐写数据、专有元数据和平台再次写入的信息也不在完整保证范围内。</p></article><section class="section compact related"><h2>相关工具</h2><div class="related-links"><a href="/tuan-tools-cn/watermark/">图片加水印（证件与资料）</a><a href="/tuan-tools-cn/compress/">图片压缩到指定 KB</a><a href="/tuan-tools-cn/resize/">图片尺寸修改与裁剪</a><a href="/tuan-tools-cn/convert/">图片格式转换（JPG/PNG/WebP）</a></div></section><section class="section compact"><article class="article"><h2>常见问题</h2><h3>EXIF 是什么？</h3><p>EXIF 是照片文件中常见的一类元数据，可记录拍摄设备、时间、方向、曝光参数，以及在部分照片中可能存在的 GPS 位置信息。</p><h3>照片 EXIF 里一定有 GPS 吗？</h3><p>不一定。是否包含 GPS 取决于拍摄设备、系统权限、相机设置以及后续编辑或分享过程。</p><h3>清除 EXIF 会降低照片质量吗？</h3><p>该工具通过浏览器重新编码生成新文件，因此可能产生轻微画质或色彩差异。它不是对原文件元数据区域做无损就地删除。</p><h3>删除 EXIF 后就完全匿名了吗？</h3><p>不是。人脸、门牌、文件编号、环境特征、隐写数据或平台重新写入的信息仍可能暴露身份或来源。</p><h3>图片会上传到服务器吗？</h3><p>不会由本站代码主动上传。EXIF 读取和重新编码都在当前浏览器中完成。</p></article></section>
+  <article class="article"><h2>照片信息可能包括什么</h2><p>EXIF 并不等于“定位信息”，它是一组可能随照片保存的元数据。不同设备和编辑软件写入的字段不一样，照片也不一定包含 GPS。</p><table><thead><tr><th>常见信息</th><th>可能看到的内容</th><th>需要注意什么</th></tr></thead><tbody><tr><td>拍摄时间</td><td>DateTimeOriginal 等</td><td>可能暴露活动时间</td></tr><tr><td>设备信息</td><td>手机/相机品牌、型号、镜头</td><td>可能暴露使用设备</td></tr><tr><td>GPS</td><td>经纬度、方向等</td><td>存在时可能暴露拍摄位置</td></tr><tr><td>曝光参数</td><td>ISO、快门、光圈</td><td>通常隐私风险较低</td></tr></tbody></table><p>本工具只展示有限的常见字段。精确 GPS 坐标默认隐藏，只有主动点击后才显示。</p><h2>清除方法与验证</h2><p>工具把可见像素绘制到新画布，再由浏览器编码。JPG 输出会重新检查是否仍存在 EXIF APP1 段；PNG 和 WebP 输出说明为“没有复制原元数据”，不声称进行了完整取证级分析。</p><h2>清除 EXIF 不等于匿名</h2><p>画面中的人脸、门牌、文件编号和环境特征仍可能暴露身份。隐写数据、专有元数据和平台再次写入的信息也不在完整保证范围内。</p></article><section class="section compact related"><h2>相关工具</h2><div class="related-links"><a href="/tuan-tools-cn/watermark/">图片加水印（证件与资料）</a><a href="/tuan-tools-cn/compress/">图片压缩到指定 KB</a><a href="/tuan-tools-cn/resize/">图片尺寸修改与裁剪</a><a href="/tuan-tools-cn/convert/">图片格式转换（JPG/PNG/WebP）</a></div></section><section class="section compact related"><h2>进一步了解</h2><div class="related-links"><a href="/tuan-tools-cn/guides/remove-photo-location/">照片定位信息怎么检查和清除？</a><a href="/tuan-tools-cn/guides/id-watermark/">分享证件图片时水印怎么写？</a></div></section><section class="section compact"><article class="article"><h2>常见问题</h2><h3>照片 EXIF 里一定有 GPS 吗？</h3><p>不一定。是否包含 GPS 取决于设备、系统权限、相机设置以及照片是否经过编辑或社交平台重新处理。</p><h3>清除 EXIF 会不会完全匿名？</h3><p>不会。人脸、门牌、文件编号、环境特征以及其他未被本工具解析的元数据仍可能暴露身份或来源。</p><h3>为什么清除 EXIF 会重新编码？</h3><p>本工具把可见像素绘制到新画布后重新导出，不是直接修改原文件的元数据区。因此输出文件可能出现轻微画质、色彩或文件大小变化。</p></article></section>
 </div><aside class="side-context" aria-label="使用提示"><section><h2>读取范围</h2><p>只读取 JPEG APP1 段内的有限常见标签，并限制字段长度和目录数量。</p></section><section><h2>使用边界</h2><p>不要把输出作为取证材料，也不要删除唯一的原文件。</p></section></aside></div>
-<section class="promotion-band" aria-label="推广">
-  <div class="promotion-inner">
-    <a class="promotion-banner" href="https://huyuejsq.co/" target="_blank" rel="sponsored noopener noreferrer" aria-label="推广：访问虎跃加速网站">
-      <span class="promotion-label">推广</span>
-      <span class="promotion-copy"><strong>虎跃加速</strong><span>多平台网络连接工具，查看产品介绍与下载方式</span></span>
-      <span class="promotion-action">访问网站 <span aria-hidden="true">→</span></span>
-    </a>
-  </div>
-</section>
 </main>
 <footer class="site-footer">
   <div class="footer-inner">
     <span>© <span data-year></span> 图安工具</span>
-    <div class="footer-links"><a href="/tuan-tools-cn/methodology/">安全与隐私</a><a href="/tuan-tools-cn/about/">关于本站</a><a href="/tuan-tools-cn/privacy/">隐私政策</a><a href="/tuan-tools-cn/terms/">使用条款</a></div>
+    <div class="footer-groups"><div class="footer-links"><a href="/tuan-tools-cn/guides/">使用指南</a><a href="/tuan-tools-cn/methodology/">安全与隐私</a><a href="/tuan-tools-cn/about/">关于本站</a><a href="/tuan-tools-cn/privacy/">隐私政策</a><a href="/tuan-tools-cn/terms/">使用条款</a><button class="footer-install" type="button" data-install-app hidden>安装到设备</button></div></div>
   </div>
 </footer>
-<script src="/tuan-tools-cn/assets/js/site.js?v=e67f5936c4b5" defer></script>
-<script src="/tuan-tools-cn/assets/js/image-core.js?v=e67f5936c4b5" defer></script>
-<script src="/tuan-tools-cn/assets/js/exif.js?v=e67f5936c4b5" defer></script>
+<script src="/tuan-tools-cn/assets/js/site.js?v=5067a29a4a55" defer></script>
+<script src="/tuan-tools-cn/assets/js/image-core.js?v=5067a29a4a55" defer></script>
+<script src="/tuan-tools-cn/assets/js/exif.js?v=5067a29a4a55" defer></script>
 </body>
 </html>

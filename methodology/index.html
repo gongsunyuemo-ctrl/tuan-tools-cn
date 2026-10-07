@@ -3,6 +3,12 @@
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="theme-color" content="#f7f5ef">
+  <meta name="color-scheme" content="light">
+  <meta name="application-name" content="图安工具">
+  <meta name="mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-title" content="图安">
   <meta http-equiv="Content-Security-Policy" content="default-src &#39;self&#39;; img-src &#39;self&#39; blob: data: https://www.google-analytics.com https://*.google-analytics.com; script-src &#39;self&#39; https://www.googletagmanager.com &#39;sha256-raBhssJ6dcdj2GOJsGZkKWItGurJlgEOhKna42CqK5c=&#39;; style-src &#39;self&#39;; connect-src &#39;self&#39; https://www.google-analytics.com https://*.google-analytics.com https://*.analytics.google.com; object-src &#39;none&#39;; base-uri &#39;none&#39;; form-action &#39;none&#39;; frame-src &#39;none&#39;">
   <meta name="referrer" content="no-referrer">
   <meta name="robots" content="index,follow,max-image-preview:large">
@@ -10,24 +16,26 @@
   <meta name="description" content="了解图安工具为什么可以在浏览器本地处理图片、支持哪些格式、有哪些安全与隐私边界，以及哪些情况不适合使用。">
   <meta name="author" content="图安工具维护团队">
   <link rel="canonical" href="https://gongsunyuemo-ctrl.github.io/tuan-tools-cn/methodology/">
-  <link rel="icon" href="/tuan-tools-cn/assets/img/favicon.png?v=e67f5936c4b5" sizes="32x32">
-  <link rel="apple-touch-icon" href="/tuan-tools-cn/assets/img/apple-touch-icon.png?v=e67f5936c4b5">
+  <link rel="icon" href="/tuan-tools-cn/assets/img/favicon.png?v=5067a29a4a55" sizes="32x32">
+  <link rel="apple-touch-icon" href="/tuan-tools-cn/assets/img/apple-touch-icon.png?v=5067a29a4a55">
+  <link rel="manifest" href="/tuan-tools-cn/manifest.webmanifest">
   <meta property="og:type" content="website">
   <meta property="og:locale" content="zh_CN">
   <meta property="og:site_name" content="图安工具">
   <meta property="og:title" content="图片本地处理与安全说明 - 图安工具">
   <meta property="og:description" content="了解图安工具为什么可以在浏览器本地处理图片、支持哪些格式、有哪些安全与隐私边界，以及哪些情况不适合使用。">
   <meta property="og:url" content="https://gongsunyuemo-ctrl.github.io/tuan-tools-cn/methodology/">
-  <meta property="og:image" content="https://gongsunyuemo-ctrl.github.io/tuan-tools-cn/assets/img/hero-workbench.webp?v=e67f5936c4b5">
+  
+  <meta property="og:image" content="https://gongsunyuemo-ctrl.github.io/tuan-tools-cn/assets/img/hero-workbench.webp?v=5067a29a4a55">
   <meta property="og:image:width" content="1672">
   <meta property="og:image:height" content="941">
   <meta property="og:image:alt" content="桌面上的手机、照片、色卡和裁切尺">
   <meta name="twitter:card" content="summary_large_image">
   <meta name="twitter:title" content="图片本地处理与安全说明 - 图安工具">
   <meta name="twitter:description" content="了解图安工具为什么可以在浏览器本地处理图片、支持哪些格式、有哪些安全与隐私边界，以及哪些情况不适合使用。">
-  <meta name="twitter:image" content="https://gongsunyuemo-ctrl.github.io/tuan-tools-cn/assets/img/hero-workbench.webp?v=e67f5936c4b5">
+  <meta name="twitter:image" content="https://gongsunyuemo-ctrl.github.io/tuan-tools-cn/assets/img/hero-workbench.webp?v=5067a29a4a55">
   <meta name="twitter:image:alt" content="桌面上的手机、照片、色卡和裁切尺">
-  <link rel="stylesheet" href="/tuan-tools-cn/assets/css/styles.css?v=e67f5936c4b5">
+  <link rel="stylesheet" href="/tuan-tools-cn/assets/css/styles.css?v=5067a29a4a55">
   <script async src="https://www.googletagmanager.com/gtag/js?id=G-40JD4CQ5DT"></script>
   <script>window.dataLayer = window.dataLayer || [];
 function gtag(){dataLayer.push(arguments);}
@@ -41,19 +49,21 @@ gtag('config', 'G-40JD4CQ5DT', { anonymize_ip: true });</script>
   <nav class="nav-shell" aria-label="主导航">
     <a class="brand" href="/tuan-tools-cn/"><span class="brand-mark" aria-hidden="true">图</span>图安工具</a>
     <button class="menu-button" type="button" aria-label="打开导航" aria-expanded="false" aria-controls="site-navigation"><span class="menu-lines" aria-hidden="true"></span></button>
-    <div class="nav-links" id="site-navigation"><a href="/tuan-tools-cn/">全部工具</a><a aria-current="page" href="/tuan-tools-cn/methodology/">安全与隐私</a><a href="/tuan-tools-cn/about/">关于</a></div>
+    <div class="nav-links" id="site-navigation"><a href="/tuan-tools-cn/">全部工具</a><a href="/tuan-tools-cn/guides/">使用指南</a><a aria-current="page" href="/tuan-tools-cn/methodology/">安全与隐私</a><a href="/tuan-tools-cn/about/">关于</a></div>
   </nav>
 </header>
+<div class="offline-notice" data-offline-notice role="status" aria-live="polite" hidden>当前处于离线模式：已缓存的核心工具仍可打开，页面访问统计和外部链接可能不可用。</div>
+
 <main id="main" tabindex="-1">
-<section class="page-head"><div class="page-head-inner"><p class="eyebrow">安全与隐私</p><h1>图片本地处理与安全说明</h1><p>这里说明图片如何在浏览器中处理、哪些数据不会由本站代码主动上传，以及使用工具时需要注意的边界。</p></div></section><section class="section"><article class="article"><h2>为什么图片可以不上传服务器？</h2><p>现代浏览器可以直接读取用户主动选择的本地文件，并通过 Canvas、Blob 和浏览器自带的图片编码能力完成预览、修改和导出。本站工具利用这些浏览器能力处理图片，不设置图片上传接口。</p><h2>页面访问是否完全不产生网络数据？</h2><p>不是。打开网页需要从 GitHub Pages 加载 HTML、CSS、JavaScript 和图片资源；本站还使用 Google Analytics 4 统计基础页面访问情况。GitHub 和 Google 可能处理 IP 地址、访问时间、浏览器或设备信息、访问路径、来源页面及粗略地理位置等技术数据。这里所说的“本地处理”是指你在工具中选择的源图片、图片内容、水印文字和处理结果不会被本站代码作为统计数据主动上传。</p><h2>Google Analytics 会统计什么？</h2><p>本站使用 Google Analytics 4 了解页面访问量、来源、设备类型和页面使用情况，以帮助改进工具和内容。本站不会主动把文件名、图片像素内容、EXIF 内容、GPS 坐标、水印文字或下载后的文件作为 Analytics 事件参数发送。</p><h2>支持哪些图片？</h2><p>当前主要支持静态 JPG、PNG 和 WebP。动画 PNG、动画 WebP、GIF 以及多帧照片格式不在处理范围内。单边最大 8192 像素，总像素上限 2400 万，实际可用上限还会受设备内存和浏览器限制影响。</p><h2>重新编码会改变什么？</h2><p>压缩、格式转换、尺寸修改和 EXIF 清除都可能触发浏览器重新编码。原始 EXIF、ICC 色彩配置、DPI、XMP、版权字段和部分专有元数据不保证原样保留；颜色和细节也可能出现轻微变化。</p><h2>水印和 EXIF 清除能提供什么保护？</h2><p>可见水印可以帮助标注用途并降低图片被直接挪用的风险，但不能保证阻止裁剪、覆盖或修复。清除常见 EXIF 可以减少一部分元数据暴露，但不能消除人脸、门牌、文件编号、环境特征或其他可识别信息。</p><h2>使用前建议</h2><ul><li>保留原文件，不要把处理结果作为唯一副本。</li><li>下载后重新打开，检查文字、人脸、二维码和关键边缘。</li><li>处理证件或隐私资料时，只向确有必要的接收方提供必要信息。</li><li>对取证、医疗、印刷色彩或严格合规场景，不要把浏览器工具当作专业软件的替代品。</li></ul></article></section>
+<section class="page-head"><div class="page-head-inner"><p class="eyebrow">安全与隐私</p><h1>图片本地处理与安全说明</h1><p>这里说明图片如何在浏览器中处理、哪些数据不会由本站代码主动上传，以及使用工具时需要注意的边界。</p></div></section><section class="section"><article class="article"><h2>为什么图片可以不上传服务器？</h2><p>现代浏览器可以直接读取用户主动选择的本地文件，并通过 Canvas、Blob 和浏览器自带的图片编码能力完成预览、修改和导出。本站工具利用这些浏览器能力处理图片，不设置图片上传接口。</p><h2>离线能力会缓存什么？</h2><p>支持 Service Worker 的浏览器在成功访问后，会缓存本站核心页面、CSS、JavaScript 和图标，用于网络不稳定时继续打开工具。离线缓存不包含你选择的本地图片、Canvas 内容、Blob 处理结果或 Google Analytics 请求；浏览器仍可按自身策略清理缓存。</p><h2>页面访问是否完全不产生网络数据？</h2><p>不是。打开网页需要从 GitHub Pages 加载 HTML、CSS、JavaScript 和图片资源；本站还使用 Google Analytics 4 统计基础页面访问情况。GitHub 和 Google 可能处理 IP 地址、访问时间、浏览器或设备信息、访问路径、来源页面及粗略地理位置等技术数据。这里所说的“本地处理”是指你在工具中选择的源图片、图片内容、水印文字和处理结果不会被本站代码作为统计数据主动上传。</p><h2>Google Analytics 会统计什么？</h2><p>本站使用 Google Analytics 4 了解页面访问量、来源、设备类型和页面使用情况，以帮助改进工具和内容。工具页还会记录“选择文件、开始处理、处理成功、下载结果”等动作以及对应工具名称，用于判断功能是否真正被使用。本站不会主动把文件名、图片尺寸内容、图片像素、EXIF 内容、GPS 坐标、水印文字、导出参数或下载后的文件作为 Analytics 事件参数发送。</p><h2>支持哪些图片？</h2><p>当前主要支持静态 JPG、PNG 和 WebP。动画 PNG、动画 WebP、GIF 以及多帧照片格式不在处理范围内。单边最大 8192 像素，总像素上限 2400 万，实际可用上限还会受设备内存和浏览器限制影响。</p><h2>重新编码会改变什么？</h2><p>压缩、格式转换、尺寸修改和 EXIF 清除都可能触发浏览器重新编码。原始 EXIF、ICC 色彩配置、DPI、XMP、版权字段和部分专有元数据不保证原样保留；颜色和细节也可能出现轻微变化。</p><h2>水印和 EXIF 清除能提供什么保护？</h2><p>可见水印可以帮助标注用途并降低图片被直接挪用的风险，但不能保证阻止裁剪、覆盖或修复。清除常见 EXIF 可以减少一部分元数据暴露，但不能消除人脸、门牌、文件编号、环境特征或其他可识别信息。</p><h2>使用前建议</h2><ul><li>保留原文件，不要把处理结果作为唯一副本。</li><li>下载后重新打开，检查文字、人脸、二维码和关键边缘。</li><li>处理证件或隐私资料时，只向确有必要的接收方提供必要信息。</li><li>对取证、医疗、印刷色彩或严格合规场景，不要把浏览器工具当作专业软件的替代品。</li></ul><h2>技术参考</h2><p>本站对浏览器图片导出和格式能力的说明可对照 MDN 的 <a href="https://developer.mozilla.org/zh-CN/docs/Web/API/HTMLCanvasElement/toBlob">HTMLCanvasElement.toBlob()</a> 与 <a href="https://developer.mozilla.org/zh-CN/docs/Web/Media/Guides/Formats/Image_types">图像文件类型与格式指南</a>。浏览器实现和格式支持会随版本变化，实际能力仍以用户当前浏览器为准。</p></article></section>
 </main>
 <footer class="site-footer">
   <div class="footer-inner">
     <span>© <span data-year></span> 图安工具</span>
-    <div class="footer-links"><a href="/tuan-tools-cn/methodology/">安全与隐私</a><a href="/tuan-tools-cn/about/">关于本站</a><a href="/tuan-tools-cn/privacy/">隐私政策</a><a href="/tuan-tools-cn/terms/">使用条款</a></div>
+    <div class="footer-groups"><div class="footer-links"><a href="/tuan-tools-cn/guides/">使用指南</a><a href="/tuan-tools-cn/methodology/">安全与隐私</a><a href="/tuan-tools-cn/about/">关于本站</a><a href="/tuan-tools-cn/privacy/">隐私政策</a><a href="/tuan-tools-cn/terms/">使用条款</a><button class="footer-install" type="button" data-install-app hidden>安装到设备</button></div></div>
   </div>
 </footer>
-<script src="/tuan-tools-cn/assets/js/site.js?v=e67f5936c4b5" defer></script>
+<script src="/tuan-tools-cn/assets/js/site.js?v=5067a29a4a55" defer></script>
 
 </body>
 </html>
