@@ -1,0 +1,98 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="theme-color" content="#f7f5ef">
+  <meta name="color-scheme" content="light">
+  <meta name="application-name" content="图安工具">
+  <meta name="mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-title" content="图安">
+  <meta http-equiv="Content-Security-Policy" content="default-src &#39;self&#39;; img-src &#39;self&#39; blob: data: https://www.google-analytics.com https://*.google-analytics.com; script-src &#39;self&#39; https://www.googletagmanager.com &#39;sha256-3qmM4oe2wyQtf6JeAIuFO/zr8kh71CYCs3yX5wKis4A=&#39; &#39;sha256-VDjqlcnd17/Gg9LabggG0kMPhw6JAzb/3RyHtMKtaIY=&#39; &#39;sha256-5l+rYBT2MaBbYoU7NS6/eZLgbeczClHs3TgIkLouyq0=&#39; &#39;sha256-DJqvO8wVbgAAQYWmeWxYPxrPjRg/6SsNsK2ZLrCkJZg=&#39; &#39;sha256-raBhssJ6dcdj2GOJsGZkKWItGurJlgEOhKna42CqK5c=&#39;; style-src &#39;self&#39;; connect-src &#39;self&#39; https://www.google-analytics.com https://*.google-analytics.com https://*.analytics.google.com; object-src &#39;none&#39;; base-uri &#39;none&#39;; form-action &#39;none&#39;; frame-src &#39;none&#39;">
+  <meta name="referrer" content="no-referrer">
+  <meta name="robots" content="index,follow,max-image-preview:large">
+  <title>图片加水印 - 证件与资料用途水印工具｜图安工具</title>
+  <meta name="description" content="在线给证件、资料和普通图片添加用途水印，支持重复铺满、透明度、角度、颜色和自动换行。图片在浏览器本地处理。">
+  <meta name="author" content="图安工具维护团队">
+  <link rel="canonical" href="https://gongsunyuemo-ctrl.github.io/tuan-tools-cn/watermark/">
+  <link rel="icon" href="/tuan-tools-cn/assets/img/favicon.png?v=aa6b9f5bc1f0" sizes="32x32">
+  <link rel="apple-touch-icon" href="/tuan-tools-cn/assets/img/apple-touch-icon.png?v=aa6b9f5bc1f0">
+  <link rel="manifest" href="/tuan-tools-cn/manifest.webmanifest">
+  <meta property="og:type" content="website">
+  <meta property="og:locale" content="zh_CN">
+  <meta property="og:site_name" content="图安工具">
+  <meta property="og:title" content="图片加水印（证件与资料）">
+  <meta property="og:description" content="在线给证件、资料和普通图片添加用途水印，支持重复铺满、透明度、角度、颜色和自动换行。图片在浏览器本地处理。">
+  <meta property="og:url" content="https://gongsunyuemo-ctrl.github.io/tuan-tools-cn/watermark/">
+  
+  <meta property="og:image" content="https://gongsunyuemo-ctrl.github.io/tuan-tools-cn/assets/img/hero-workbench.webp?v=aa6b9f5bc1f0">
+  <meta property="og:image:width" content="1672">
+  <meta property="og:image:height" content="941">
+  <meta property="og:image:alt" content="桌面上的手机、照片、色卡和裁切尺">
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="twitter:title" content="图片加水印（证件与资料）">
+  <meta name="twitter:description" content="在线给证件、资料和普通图片添加用途水印，支持重复铺满、透明度、角度、颜色和自动换行。图片在浏览器本地处理。">
+  <meta name="twitter:image" content="https://gongsunyuemo-ctrl.github.io/tuan-tools-cn/assets/img/hero-workbench.webp?v=aa6b9f5bc1f0">
+  <meta name="twitter:image:alt" content="桌面上的手机、照片、色卡和裁切尺">
+  <link rel="stylesheet" href="/tuan-tools-cn/assets/css/styles.css?v=aa6b9f5bc1f0">
+  <script async src="https://www.googletagmanager.com/gtag/js?id=G-40JD4CQ5DT"></script>
+  <script>window.dataLayer = window.dataLayer || [];
+function gtag(){dataLayer.push(arguments);}
+gtag('js', new Date());
+gtag('config', 'G-40JD4CQ5DT', { anonymize_ip: true });</script>
+  <script type="application/ld+json">{"@context":"https://schema.org","@type":"Organization","@id":"https://gongsunyuemo-ctrl.github.io/tuan-tools-cn/#organization","name":"图安工具","url":"https://gongsunyuemo-ctrl.github.io/tuan-tools-cn/","sameAs":["https://github.com/gongsunyuemo-ctrl/tuan-tools-cn"],"foundingDate":"2026-08-24"}</script>
+  <script type="application/ld+json">{"@context":"https://schema.org","@type":"WebSite","@id":"https://gongsunyuemo-ctrl.github.io/tuan-tools-cn/#website","name":"图安工具","url":"https://gongsunyuemo-ctrl.github.io/tuan-tools-cn/","inLanguage":"zh-CN","publisher":{"@id":"https://gongsunyuemo-ctrl.github.io/tuan-tools-cn/#organization"}}</script>
+  <script type="application/ld+json">{"@context":"https://schema.org","@type":"WebApplication","name":"图片加水印（证件与资料）","url":"https://gongsunyuemo-ctrl.github.io/tuan-tools-cn/watermark/","description":"在线给证件、资料和普通图片添加用途水印，支持重复铺满、透明度、角度、颜色和自动换行。图片在浏览器本地处理。","applicationCategory":"SecurityApplication","operatingSystem":"支持现代浏览器的桌面与移动设备","browserRequirements":"需要 JavaScript、Canvas、Blob 和本地文件读取能力","isAccessibleForFree":true,"isPartOf":{"@id":"https://gongsunyuemo-ctrl.github.io/tuan-tools-cn/#website"},"offers":{"@type":"Offer","price":0,"priceCurrency":"CNY"},"author":{"@id":"https://gongsunyuemo-ctrl.github.io/tuan-tools-cn/#organization"},"publisher":{"@id":"https://gongsunyuemo-ctrl.github.io/tuan-tools-cn/#organization"},"dateModified":"2026-10-06"}</script>
+  <script type="application/ld+json">{"@context":"https://schema.org","@type":"BreadcrumbList","itemListElement":[{"@type":"ListItem","position":1,"name":"全部工具","item":"https://gongsunyuemo-ctrl.github.io/tuan-tools-cn/"},{"@type":"ListItem","position":2,"name":"图片加水印（证件与资料）","item":"https://gongsunyuemo-ctrl.github.io/tuan-tools-cn/watermark/"}]}</script>
+</head>
+<body>
+<a class="skip-link" href="#main">跳到主要内容</a>
+<header class="site-header">
+  <nav class="nav-shell" aria-label="主导航">
+    <a class="brand" href="/tuan-tools-cn/"><span class="brand-mark" aria-hidden="true">图</span>图安工具</a>
+    <button class="menu-button" type="button" aria-label="打开导航" aria-expanded="false" aria-controls="site-navigation"><span class="menu-lines" aria-hidden="true"></span></button>
+    <div class="nav-links" id="site-navigation"><a href="/tuan-tools-cn/">全部工具</a><a href="/tuan-tools-cn/guides/">使用指南</a><a href="/tuan-tools-cn/methodology/">安全与隐私</a><a href="/tuan-tools-cn/about/">关于</a></div>
+  </nav>
+</header>
+<div class="offline-notice" data-offline-notice role="status" aria-live="polite" hidden>当前处于离线模式：已缓存的核心工具仍可打开，页面访问统计和外部链接可能不可用。</div>
+<noscript><div class="noscript-note" role="note">这个工具需要 JavaScript 才能在浏览器本地处理图片。请启用 JavaScript 后重新打开页面；页面中的说明内容仍可正常阅读。</div></noscript>
+<main id="main" tabindex="-1">
+<section class="page-head"><div class="page-head-inner">
+  <nav class="breadcrumbs" aria-label="面包屑"><a href="/tuan-tools-cn/">全部工具</a> / <span aria-current="page">添加水印</span></nav>
+  <p class="eyebrow">资料分享</p><h1>图片加水印（证件与资料）</h1><p>图片水印是在画面上叠加可见文字，用于标注接收方、用途和日期。水印可以增加直接挪用的成本，但不能替代打码或访问控制。</p>
+</div></section>
+<div class="workspace"><div class="tool-panel">
+  <noscript><p class="notice">图片处理需要启用 JavaScript；下方使用说明仍可正常阅读。</p></noscript>
+  <div class="dropzone" id="dropzone">
+  <div><strong>选择或拖入一张资料图片</strong><p>请先确认接收方确有必要获取这份资料</p><button class="button secondary" type="button" data-file-trigger>选择图片</button><input id="file-input" type="file" tabindex="-1" accept="image/jpeg,image/png,image/webp" aria-label="选择图片文件"></div>
+</div><p class="file-summary" id="file-summary" aria-live="polite"></p><div class="preview-shell"><span class="preview-empty" id="preview-empty">水印预览会显示在这里</span><canvas id="canvas" hidden>当前浏览器不支持画布预览。</canvas></div>
+<div class="controls"><fieldset class="template-builder"><legend>快速生成用途水印（可选）</legend><div class="control-grid"><div class="control-group"><label for="template-recipient">接收方</label><input id="template-recipient" maxlength="24" autocomplete="off" placeholder="例如：XX 平台"></div><div class="control-group"><label for="template-purpose">用途</label><select id="template-purpose"><option value="账户核验">账户核验</option><option value="实名认证">实名认证</option><option value="入职材料审核">入职材料审核</option><option value="资料审核">资料审核</option></select></div><div class="control-group"><label for="template-date">日期</label><input id="template-date" type="date"></div><div class="control-group template-action"><button class="button secondary" type="button" id="build-watermark">填入水印文字</button></div></div><p class="hint">生成后仍可自由修改。敏感字段若非必要提供，应优先直接打码，而不是只依赖水印。</p></fieldset><div class="control-grid"><div class="control-group full"><label for="watermark-text">水印文字</label><input id="watermark-text" value="仅供资料审核使用" maxlength="80" autocomplete="off"><span class="hint">文字过长时自动缩小并换行，最多三行</span></div><div class="control-group"><label for="font-size">字号 <span id="font-size-value">48</span></label><input id="font-size" type="range" min="18" max="120" value="48"></div><div class="control-group"><label for="opacity">透明度 <span id="opacity-value">38%</span></label><input id="opacity" type="range" min="10" max="90" value="38"></div><div class="control-group"><label for="angle">旋转角度 <span id="angle-value">-25°</span></label><input id="angle" type="range" min="-60" max="60" value="-25"></div><div class="control-group"><label for="color">文字颜色</label><input id="color" type="color" value="#b3261e"></div><div class="control-group"><label for="output-format">输出格式</label><select id="output-format"><option value="image/jpeg">JPG</option><option value="image/png">PNG</option><option value="image/webp">WebP</option></select></div><div class="control-group"><div class="inline-check"><input id="repeat" type="checkbox" checked><label for="repeat">重复铺满</label></div></div></div><div class="button-row"><button class="button" id="run" type="button" disabled>生成水印图片</button><button class="button ghost" id="reset" type="button" hidden>重新开始</button></div></div>
+<div class="status-line" id="status" role="status" aria-live="polite" hidden></div><section class="result-block" id="result" aria-labelledby="result-title" hidden>
+  <h2 id="result-title">导出结果</h2>
+  <div class="preview-shell"><img id="result-preview" data-blob-preview alt="处理结果预览"></div>
+  <div class="result-row"><span class="result-label">文件大小</span><strong class="result-value" id="output-size"></strong></div>
+  <div class="result-row"><span class="result-label">输出尺寸</span><strong class="result-value" id="output-dimensions"></strong></div>
+  <div class="result-actions"><button class="button" id="download" type="button">下载结果</button><button class="button secondary" id="open-result" type="button">打开结果</button></div>
+</section>
+  <aside class="promotion-compact" aria-label="赞助信息">
+    <a href="https://huyuejsq.co/" target="_blank" rel="sponsored noopener noreferrer" data-sponsor-placement="tool" aria-label="赞助：访问虎跃加速器官网">
+      <span class="promotion-compact-brand"><img src="/tuan-tools-cn/assets/img/huyue-logo.png?v=aa6b9f5bc1f0" width="248" height="277" alt="" loading="lazy"><span><small>赞助 · 第三方商业合作</small><strong>虎跃加速器</strong></span></span>
+      <span class="promotion-compact-copy">查看当前套餐、客户端与下载信息</span>
+      <span class="promotion-compact-action">前往官网 →</span>
+    </a>
+  </aside>
+  <article class="article"><h2>资料水印建议怎么写</h2><p>优先写“接收方 + 具体用途 + 日期”，例如“仅供 XX 平台账户核验使用｜YYYY-MM-DD”。这样比“仅供资料审核”更容易说明这张图片为什么被提供，也不用在静态页面里写一个很快过期的固定日期。</p><p>如果准备分享手机拍摄的证件或资料，可以先用<a href="/tuan-tools-cn/remove-exif/">EXIF 查看与清除工具</a>检查是否带有拍摄设备、时间或 GPS 信息，再决定是否需要生成清理后的副本。</p><h2>水印不能解决什么</h2><p>可见水印仍可能被裁剪、覆盖或修复。证件号、住址、人脸等不必要信息应另外打码；确需提交时，也应确认接收方身份和保存期限。</p><h2>导出前检查</h2><ul><li>文字完整，没有超出画布。</li><li>必要信息仍然可读，但水印覆盖范围足够。</li><li>JPG 的透明区域会以白色合成，PNG 和 WebP 可保留透明区域。</li></ul></article><section class="section compact related"><h2>相关工具</h2><div class="related-links"><a href="/tuan-tools-cn/remove-exif/">EXIF 查看与清除</a><a href="/tuan-tools-cn/compress/">图片压缩到指定 KB</a><a href="/tuan-tools-cn/resize/">图片尺寸修改与裁剪</a><a href="/tuan-tools-cn/convert/">图片格式转换（JPG/PNG/WebP）</a></div></section><section class="section compact related"><h2>进一步了解</h2><div class="related-links"><a href="/tuan-tools-cn/guides/id-watermark/">证件图片水印怎么写更合适？</a><a href="/tuan-tools-cn/guides/remove-photo-location/">照片定位信息怎么检查和清除？</a></div></section><section class="section compact"><article class="article"><h2>常见问题</h2><h3>证件或资料水印应该写什么？</h3><p>优先写清接收方、具体用途和日期，例如“仅供 XX 平台账户核验使用｜YYYY-MM-DD”。不要写与实际用途不符的绝对承诺。</p><h3>重复铺满还是单个水印？</h3><p>需要明显限制用途时可用重复铺满；普通资料只做轻量标识时可用单个水印。两种方式都应避开必须清晰可读的关键信息。</p><h3>哪些信息不该只靠水印保护？</h3><p>证件号、住址、银行卡号等非必要敏感字段更适合直接打码。水印只能增加直接挪用成本，不能阻止裁剪、覆盖或修复。</p></article></section>
+</div><aside class="side-context" aria-label="使用提示"><section><h2>隐私边界</h2><p>图片和水印文字在当前浏览器中处理。页面使用 Google Analytics 统计基础访问数据，但不会把图片内容、水印文字或导出文件作为统计参数发送。</p></section><section><h2>重要提醒</h2><p>水印只能降低直接挪用风险，不能保证阻止滥用。</p></section></aside></div>
+</main>
+<footer class="site-footer">
+  <div class="footer-inner">
+    <span>© <span data-year></span> 图安工具</span>
+    <div class="footer-groups"><div class="footer-links"><a href="/tuan-tools-cn/guides/">使用指南</a><a href="/tuan-tools-cn/methodology/">安全与隐私</a><a href="/tuan-tools-cn/about/">关于本站</a><a href="/tuan-tools-cn/privacy/">隐私政策</a><a href="/tuan-tools-cn/terms/">使用条款</a><button class="footer-install" type="button" data-install-app hidden>安装到设备</button></div></div>
+  </div>
+</footer>
+<script src="/tuan-tools-cn/assets/js/site.js?v=aa6b9f5bc1f0" defer></script>
+<script src="/tuan-tools-cn/assets/js/image-core.js?v=aa6b9f5bc1f0" defer></script>
+<script src="/tuan-tools-cn/assets/js/watermark.js?v=aa6b9f5bc1f0" defer></script>
+</body>
+</html>
