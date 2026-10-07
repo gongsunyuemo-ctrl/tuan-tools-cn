@@ -1,5 +1,5 @@
 "use strict";
-const CACHE_NAME = "tuan-tools-5067a29a4a55";
+const CACHE_NAME = "tuan-tools-cc3ee37363c1";
 const OFFLINE_URLS = ["/tuan-tools-cn/","/tuan-tools-cn/photo-requirements/","/tuan-tools-cn/inspect/","/tuan-tools-cn/compress/","/tuan-tools-cn/batch-compress/","/tuan-tools-cn/batch-exif/","/tuan-tools-cn/watermark/","/tuan-tools-cn/resize/","/tuan-tools-cn/convert/","/tuan-tools-cn/remove-exif/","/tuan-tools-cn/guides/","/tuan-tools-cn/methodology/","/tuan-tools-cn/404.html","/tuan-tools-cn/manifest.webmanifest","/tuan-tools-cn/assets/css/styles.css","/tuan-tools-cn/assets/js/image-core.js","/tuan-tools-cn/assets/js/site.js","/tuan-tools-cn/assets/js/requirements.js","/tuan-tools-cn/assets/js/inspect.js","/tuan-tools-cn/assets/js/compress.js","/tuan-tools-cn/assets/js/batch-compress.js","/tuan-tools-cn/assets/js/batch-exif.js","/tuan-tools-cn/assets/js/watermark.js","/tuan-tools-cn/assets/js/resize.js","/tuan-tools-cn/assets/js/convert.js","/tuan-tools-cn/assets/js/exif.js","/tuan-tools-cn/assets/img/favicon.png","/tuan-tools-cn/assets/img/apple-touch-icon.png","/tuan-tools-cn/assets/img/hero-workbench.webp","/tuan-tools-cn/assets/img/icon-192.png","/tuan-tools-cn/assets/img/icon-512.png"];
 self.addEventListener("install", (event) => {
   event.waitUntil(caches.open(CACHE_NAME).then((cache) => cache.addAll(OFFLINE_URLS)));

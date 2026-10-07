@@ -75,7 +75,17 @@ for (const file of htmlFiles) {
     const bannerCount = (html.match(/class="promotion-banner"/g) || []).length;
     const expectedBannerCount = promotionPages.has(name) ? 1 : 0;
     if (bannerCount !== expectedBannerCount) failures.push(`${name}：推广横幅数量应为 ${expectedBannerCount}，实际为 ${bannerCount}`);
-    if (promotionPages.has(name) && !/<a class="promotion-banner" href="https:\/\/huyuejsq\.co\/" target="_blank" rel="sponsored noopener noreferrer"/.test(html)) failures.push(`${name}：推广链接地址或安全属性不正确`);
+    if (promotionPages.has(name) && !/<a class="promotion-banner" href="https:\/\/huyuejsq\.co\/" target="_blank" rel="sponsored noopener noreferrer"/.test(html)) failures.push(`${name}：赞助链接地址或安全属性不正确`);
+    if (promotionPages.has(name) && !html.includes('class="promotion-label">赞助</span>')) failures.push(`${name}：赞助位必须明确标注“赞助”`);
+    if (promotionPages.has(name) && !html.includes('<strong>虎跃加速器</strong>')) failures.push(`${name}：赞助品牌名称必须显示为“虎跃加速器”`);
+    if (promotionPages.has(name) && !html.includes('第三方商业合作')) failures.push(`${name}：赞助位必须明确说明第三方商业合作属性`);
+    if (promotionPages.has(name) && !html.includes('前往虎跃官网')) failures.push(`${name}：赞助位缺少明确 CTA`);
+    if (name === "index.html") {
+      const taskIndex = html.indexOf('id="task-guide-title"');
+      const promoIndex = html.indexOf('class="promotion-band"');
+      const guideIndex = html.indexOf('>使用指南</p>');
+      if (!(taskIndex >= 0 && promoIndex > taskIndex && guideIndex > promoIndex)) failures.push("index.html：赞助位应位于任务导航之后、使用指南之前");
+    }
     const friendLinks = [
       ["https://ciyuan-toolbox.pages.dev/", "次元工具箱"],
       ["https://agoodvpn.github.io/vpn-guide/", "VPN指南"],
@@ -217,12 +227,22 @@ if (sitemap.includes('/friends/')) failures.push('sitemap.xml：友情链接 noi
 const readme = await readFile(resolve(sourceRoot, "README.md"), "utf8");
 const integrations = await readFile(resolve(sourceRoot, "INTEGRATIONS.md"), "utf8");
 if (/不加载统计和广告脚本|当前站点不加载统计或广告脚本/.test(readme + "\n" + integrations)) failures.push("维护文档与当前 GA4、静态推广横幅实现不一致");
-for (const heading of ["## 技术结构", "## PWA 与离线缓存", "## SEO 与 GEO 设计", "## 隐私与第三方服务", "## 发布前检查清单", "## 维护原则"]) {
-  if (!readme.includes(heading)) failures.push(`README.md：缺少关键维护章节 ${heading}`);
+for (const heading of ["## 核心能力", "## 功能与边界", "## 快速开始", "## 项目文档", "## License"]) {
+  if (!readme.includes(heading)) failures.push(`README.md：缺少公开项目章节 ${heading}`);
 }
+for (const docName of ["docs/DEVELOPMENT.md", "docs/DEPLOYMENT.md", "docs/SEO-GEO.md", "docs/PRIVACY-SECURITY.md"]) {
+  if (!readme.includes(docName)) failures.push(`README.md：缺少维护文档入口 ${docName}`);
+  try {
+    await readFile(resolve(sourceRoot, docName), "utf8");
+  } catch {
+    failures.push(`${docName}：维护文档不存在`);
+  }
+}
+const privacySecurity = await readFile(resolve(sourceRoot, "docs/PRIVACY-SECURITY.md"), "utf8");
 for (const eventName of ["tool_file_selected", "tool_run", "tool_success", "tool_download", "tool_cancel", "guide_share", "guide_copy_link"]) {
-  if (!readme.includes(eventName) || !integrations.includes(eventName)) failures.push(`维护文档缺少 Analytics 事件说明：${eventName}`);
+  if (!integrations.includes(eventName)) failures.push(`INTEGRATIONS.md 缺少 Analytics 事件说明：${eventName}`);
 }
+if (!privacySecurity.includes("INTEGRATIONS.md")) failures.push("docs/PRIVACY-SECURITY.md：缺少 Analytics 事件白名单文档入口");
 
 if (failures.length) {
   console.error(failures.map((item) => `- ${item}`).join("\n"));
