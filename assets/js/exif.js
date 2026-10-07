@@ -105,6 +105,7 @@
 
       loaded = next;
       sourceFile = file;
+      syncControls();
       window.TuanAnalytics?.track("tool_file_selected", "remove-exif");
 
       clearResult();
@@ -173,7 +174,8 @@
 
   function syncControls() {
     quality.disabled =
-      format.value === "image/png";
+      format.value === "image/png" ||
+      (format.value === "original" && loaded && loaded.type === "image/png");
 
     document.querySelector(
       "#quality-value"
@@ -1162,8 +1164,10 @@
     );
 
     try {
+      const outputType = format.value === "original" ? loaded.type : format.value;
+
       const alpha =
-        format.value !==
+        outputType !==
         "image/jpeg";
 
       const made =
@@ -1194,8 +1198,8 @@
       const blob =
         await C.canvasToBlob(
           made.canvas,
-          format.value,
-          format.value ===
+          outputType,
+          outputType ===
             "image/png"
             ? undefined
             : Number(
@@ -1327,7 +1331,7 @@
       "#metadata"
     ).hidden = true;
 
-    format.value = "image/jpeg";
+    format.value = "original";
     quality.value = "92";
 
     runButton.disabled = true;

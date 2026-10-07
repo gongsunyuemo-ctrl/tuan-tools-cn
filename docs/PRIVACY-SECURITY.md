@@ -51,6 +51,6 @@ JPEG EXIF 查看器只解析有限的常见字段。PNG / WebP 当前不应宣�
 
 ## CSP 与外部内容
 
-第三方赞助与友情链接默认只使用普通 HTML 链接，不加载对方 iframe、图片或脚本。
+第三方赞助使用本站本地保存的 Logo 与普通 HTML 链接，不从对方服务器加载 iframe、图片或脚本；友情链接只使用普通 HTML 链接。
 
 HTML `<meta>` CSP 不能实现 `frame-ancestors`。如需严格禁止第三方 iframe 嵌入，应在托管层设置响应头。

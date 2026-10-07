@@ -200,7 +200,8 @@ for (const page of policyPages) {
   assert(!html.includes('class="promotion-banner"'), `${page} 不应插入推广横幅`);
 }
 const privacyHtml = await readFile(resolve(root, "privacy/index.html"), "utf8");
-assert(privacyHtml.includes("横幅由本站自己的 HTML 和 CSS 绘制"), "隐私政策应准确披露静态推广横幅的数据边界");
+assert(privacyHtml.includes("横幅由本站自己的 HTML、CSS 与本地 Logo 文件绘制"), "隐私政策应准确披露静态推广横幅的数据边界");
+assert((await readFile(resolve(root, "index.html"), "utf8")).includes("/assets/img/huyue-logo.png?v="), "首页赞助位应使用本站本地 Logo 资源");
 const toolHtml = await readFile(resolve(root, "compress/index.html"), "utf8");
 assert(!toolHtml.includes('"@type":"FAQPage"'), "普通工具页不应保留无实际展示价值的 FAQPage 富结果标记");
 

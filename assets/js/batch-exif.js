@@ -113,7 +113,7 @@
 
   function reset() {
     gate.cancel(); files = []; clearOutputs(); list.textContent = ""; summary.textContent = "";
-    formatInput.value = "image/jpeg"; qualityInput.value = "92"; syncControls();
+    formatInput.value = "original"; qualityInput.value = "92"; syncControls();
     runButton.disabled = true; resetButton.hidden = true; C.clearStatus(status);
   }
 
@@ -129,10 +129,11 @@
     const loaded = await C.loadImage(entry.file);
     try {
       if (!gate.active(token)) throw new Error("任务已取消。");
-      const made = C.makeCanvas(loaded.width, loaded.height, type !== "image/jpeg");
-      if (type === "image/jpeg") { made.ctx.fillStyle = "#ffffff"; made.ctx.fillRect(0, 0, made.canvas.width, made.canvas.height); }
+      const outputType = type === "original" ? loaded.type : type;
+      const made = C.makeCanvas(loaded.width, loaded.height, outputType !== "image/jpeg");
+      if (outputType === "image/jpeg") { made.ctx.fillStyle = "#ffffff"; made.ctx.fillRect(0, 0, made.canvas.width, made.canvas.height); }
       made.ctx.drawImage(loaded.img, 0, 0);
-      const blob = await C.canvasToBlob(made.canvas, type, type === "image/png" ? undefined : quality);
+      const blob = await C.canvasToBlob(made.canvas, outputType, outputType === "image/png" ? undefined : quality);
       return { file: entry.file, blob, width: made.canvas.width, height: made.canvas.height };
     } finally { C.releaseImage(loaded); }
   }

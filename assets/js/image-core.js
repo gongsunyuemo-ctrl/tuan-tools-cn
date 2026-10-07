@@ -313,8 +313,17 @@
     let offset = 0;
     const stamp = dosDateTime(new Date());
 
+    const usedNames = new Map();
+
     for (const entry of entries) {
-      const nameBytes = encoder.encode(String(entry.name || "file.bin"));
+      const rawName = String(entry.name || "file.bin");
+      const dot = rawName.lastIndexOf(".");
+      const stem = dot > 0 ? rawName.slice(0, dot) : rawName;
+      const extension = dot > 0 ? rawName.slice(dot) : "";
+      const seen = usedNames.get(rawName) || 0;
+      usedNames.set(rawName, seen + 1);
+      const archiveName = seen ? stem + "-" + (seen + 1) + extension : rawName;
+      const nameBytes = encoder.encode(archiveName);
       const data = new Uint8Array(await entry.blob.arrayBuffer());
       const crc = crc32(data);
       const local = new Uint8Array(30 + nameBytes.length);

@@ -80,6 +80,10 @@ for (const file of htmlFiles) {
     if (promotionPages.has(name) && !html.includes('<strong>虎跃加速器</strong>')) failures.push(`${name}：赞助品牌名称必须显示为“虎跃加速器”`);
     if (promotionPages.has(name) && !html.includes('第三方商业合作')) failures.push(`${name}：赞助位必须明确说明第三方商业合作属性`);
     if (promotionPages.has(name) && !html.includes('前往虎跃官网')) failures.push(`${name}：赞助位缺少明确 CTA`);
+    if (promotionPages.has(name) && !html.includes('/assets/img/huyue-logo.png?v=')) failures.push(`${name}：赞助位缺少本站本地虎跃 Logo`);
+    if (name === "remove-exif/index.html" && !html.includes('<option value="original">保持原格式（推荐）</option>')) failures.push(`${name}：EXIF 清理默认应允许保持原格式`);
+    if (name === "batch-exif/index.html" && !html.includes('<option value="original">保持原格式（推荐）</option>')) failures.push(`${name}：批量元数据清理默认应允许保持原格式`);
+    if (name === "convert/index.html" && html.includes('<option value="original">')) failures.push(`${name}：格式转换工具不应提供“保持原格式”选项`);
     if (name === "index.html") {
       const taskIndex = html.indexOf('id="task-guide-title"');
       const promoIndex = html.indexOf('class="promotion-band"');
@@ -165,7 +169,7 @@ try {
   if (/blob:|data:/.test(worker)) failures.push("service-worker.js：不应持久缓存 Blob/Data URL");
   if (!worker.includes("/batch-exif/") || !worker.includes("assets/js/batch-exif.js")) failures.push("service-worker.js：缺少批量元数据清理离线资源");
   if (!worker.includes("/photo-requirements/") || !worker.includes("assets/js/requirements.js")) failures.push("service-worker.js：缺少按上传要求处理工具离线资源");
-  for (const offlineAsset of ["/404.html", "/manifest.webmanifest", "/assets/img/apple-touch-icon.png", "/assets/img/hero-workbench.webp"]) if (!worker.includes(offlineAsset)) failures.push(`service-worker.js：缺少离线资源 ${offlineAsset}`);
+  for (const offlineAsset of ["/404.html", "/manifest.webmanifest", "/assets/img/apple-touch-icon.png", "/assets/img/hero-workbench.webp", "/assets/img/huyue-logo.png"]) if (!worker.includes(offlineAsset)) failures.push(`service-worker.js：缺少离线资源 ${offlineAsset}`);
   const batchCompressHtml = await readFile(resolve(root, "batch-compress/index.html"), "utf8");
   const batchExifHtml = await readFile(resolve(root, "batch-exif/index.html"), "utf8");
   if (!batchCompressHtml.includes('id="batch-progress"') || !batchCompressHtml.includes('id="cancel"')) failures.push("batch-compress/index.html：缺少批量进度或停止控件");
