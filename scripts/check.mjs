@@ -14,7 +14,18 @@ const htmlFiles = (await walk(root)).filter((file) => file.endsWith(".html") && 
 const jsFiles = (await walk(resolve(root, "assets/js"))).filter((file) => file.endsWith(".js"));
 const failures = [];
 const publicPages = new Set(Object.keys(config.pageLastModified).map((path) => path === "/" ? "index.html" : `${path.replace(/^\//, "")}index.html`));
-const promotionPages = new Set(["index.html"]);
+const toolPromotionPages = new Set(["inspect/index.html", "photo-requirements/index.html", "compress/index.html", "batch-compress/index.html", "batch-exif/index.html", "watermark/index.html", "resize/index.html", "convert/index.html", "remove-exif/index.html"]);
+const guidePromotionPages = new Set([
+  "guides/image-kb-pixels/index.html",
+  "guides/photo-upload-too-large/index.html",
+  "guides/id-watermark/index.html",
+  "guides/remove-photo-location/index.html",
+  "guides/jpg-png-webp/index.html",
+  "guides/photo-requirements/index.html",
+  "guides/png-to-jpg-white-background/index.html",
+  "guides/compressed-image-blurry/index.html"
+]);
+const promotionPages = new Set(["index.html", ...toolPromotionPages, ...guidePromotionPages]);
 const uniqueFields = { title: new Map(), description: new Map(), canonical: new Map(), h1: new Map() };
 
 for (const publicPage of publicPages) {
@@ -72,23 +83,32 @@ for (const file of htmlFiles) {
       else if (uniqueFields[field].has(value)) failures.push(`${name}：${field} 与 ${uniqueFields[field].get(value)} 重复`);
       else uniqueFields[field].set(value, name);
     }
-    const bannerCount = (html.match(/class="promotion-banner"/g) || []).length;
+    const bannerCount = (html.match(/class="promotion-banner"/g) || []).length + (html.match(/class="promotion-compact"/g) || []).length;
     const expectedBannerCount = promotionPages.has(name) ? 1 : 0;
     if (bannerCount !== expectedBannerCount) failures.push(`${name}：推广横幅数量应为 ${expectedBannerCount}，实际为 ${bannerCount}`);
-    if (promotionPages.has(name) && !/<a class="promotion-banner" href="https:\/\/huyuejsq\.co\/" target="_blank" rel="sponsored noopener noreferrer"/.test(html)) failures.push(`${name}：赞助链接地址或安全属性不正确`);
-    if (promotionPages.has(name) && !html.includes('class="promotion-label">赞助</span>')) failures.push(`${name}：赞助位必须明确标注“赞助”`);
+    if (promotionPages.has(name) && !/href="https:\/\/huyuejsq\.co\/" target="_blank" rel="sponsored noopener noreferrer"/.test(html)) failures.push(`${name}：赞助链接地址或安全属性不正确`);
+    if (promotionPages.has(name) && !html.includes("赞助")) failures.push(`${name}：赞助位必须明确标注“赞助”`);
     if (promotionPages.has(name) && !html.includes('<strong>虎跃加速器</strong>')) failures.push(`${name}：赞助品牌名称必须显示为“虎跃加速器”`);
-    if (promotionPages.has(name) && !html.includes('第三方商业合作')) failures.push(`${name}：赞助位必须明确说明第三方商业合作属性`);
-    if (promotionPages.has(name) && !html.includes('前往虎跃官网')) failures.push(`${name}：赞助位缺少明确 CTA`);
+    if (promotionPages.has(name) && !html.includes("第三方商业合作")) failures.push(`${name}：赞助位必须明确说明第三方商业合作属性`);
+    if (promotionPages.has(name) && !(html.includes("前往虎跃官网") || html.includes("前往官网 →"))) failures.push(`${name}：赞助位缺少明确 CTA`);
     if (promotionPages.has(name) && !html.includes('/assets/img/huyue-logo.png?v=')) failures.push(`${name}：赞助位缺少本站本地虎跃 Logo`);
+    if (name === "index.html" && !html.includes('data-sponsor-placement="home"')) failures.push(`${name}：首页赞助位缺少 home 位置标识`);
+    if (toolPromotionPages.has(name) && !html.includes('data-sponsor-placement="tool"')) failures.push(`${name}：工具页赞助位缺少 tool 位置标识`);
+    if (guidePromotionPages.has(name) && !html.includes('data-sponsor-placement="guide"')) failures.push(`${name}：指南页赞助位缺少 guide 位置标识`);
+    if (guidePromotionPages.has(name)) {
+      const articleIndex = html.indexOf('<article class="article">');
+      const promoIndex = html.indexOf('class="promotion-compact"', articleIndex);
+      const actionsIndex = html.indexOf('class="article-actions"', articleIndex);
+      if (!(articleIndex >= 0 && promoIndex > articleIndex && actionsIndex > promoIndex)) failures.push(`${name}：指南赞助位应位于正文内部且早于文章操作区`);
+    }
     if (name === "remove-exif/index.html" && !html.includes('<option value="original">保持原格式（推荐）</option>')) failures.push(`${name}：EXIF 清理默认应允许保持原格式`);
     if (name === "batch-exif/index.html" && !html.includes('<option value="original">保持原格式（推荐）</option>')) failures.push(`${name}：批量元数据清理默认应允许保持原格式`);
     if (name === "convert/index.html" && html.includes('<option value="original">')) failures.push(`${name}：格式转换工具不应提供“保持原格式”选项`);
     if (name === "index.html") {
-      const taskIndex = html.indexOf('id="task-guide-title"');
+      const homeActionIndex = html.indexOf('class="home-actions"');
       const promoIndex = html.indexOf('class="promotion-band"');
-      const guideIndex = html.indexOf('>使用指南</p>');
-      if (!(taskIndex >= 0 && promoIndex > taskIndex && guideIndex > promoIndex)) failures.push("index.html：赞助位应位于任务导航之后、使用指南之前");
+      const toolListIndex = html.indexOf('id="tool-list"');
+      if (!(homeActionIndex >= 0 && promoIndex > homeActionIndex && toolListIndex > promoIndex)) failures.push("index.html：赞助位应位于首页主 CTA 之后、工具列表之前");
     }
     const friendLinks = [
       ["https://ciyuan-toolbox.pages.dev/", "次元工具箱"],
@@ -243,10 +263,14 @@ for (const docName of ["docs/DEVELOPMENT.md", "docs/DEPLOYMENT.md", "docs/SEO-GE
   }
 }
 const privacySecurity = await readFile(resolve(sourceRoot, "docs/PRIVACY-SECURITY.md"), "utf8");
-for (const eventName of ["tool_file_selected", "tool_run", "tool_success", "tool_download", "tool_cancel", "guide_share", "guide_copy_link"]) {
+for (const eventName of ["tool_file_selected", "tool_run", "tool_success", "tool_download", "tool_cancel", "guide_share", "guide_copy_link", "sponsor_impression", "sponsor_click"]) {
   if (!integrations.includes(eventName)) failures.push(`INTEGRATIONS.md 缺少 Analytics 事件说明：${eventName}`);
 }
 if (!privacySecurity.includes("INTEGRATIONS.md")) failures.push("docs/PRIVACY-SECURITY.md：缺少 Analytics 事件白名单文档入口");
+const siteScript = await readFile(resolve(sourceRoot, "assets/js/site.js"), "utf8");
+for (const token of ["sponsor_impression", "sponsor_click", "data-sponsor-placement", "IntersectionObserver"]) {
+  if (!siteScript.includes(token)) failures.push(`assets/js/site.js：缺少赞助效果统计实现 ${token}`);
+}
 
 if (failures.length) {
   console.error(failures.map((item) => `- ${item}`).join("\n"));

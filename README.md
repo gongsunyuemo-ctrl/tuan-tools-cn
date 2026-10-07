@@ -129,7 +129,7 @@ npm run check:stage  # 只检查 _site 生产目录
   "operatorName": "真实运营主体",
   "contactUrl": "https://example.com/contact",
   "repositoryUrl": "https://github.com/example/repo",
-  "currentVersion": "3.1.3",
+  "currentVersion": "3.1.5",
   "projectStarted": "2026-08-24",
   "productionReady": false
 }
